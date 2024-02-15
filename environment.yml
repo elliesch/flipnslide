@@ -1,0 +1,24 @@
+name: flipnslide-dev
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.10
+  - os
+  - glob
+  - random
+  - pandas
+  - numpy
+  - matplotlib
+  - scipy
+  - xarray
+  - rioxarray
+  - geopandas
+  - pip
+  - pip:
+    - torch
+    - torchvision
+    - tensorflow
+    - osgeo
+    - natsort
