@@ -2,7 +2,7 @@
 
 import pystac_client
 from pystac.extensions.projection import ProjectionExtension as proj
-import cartopy.crs as ccrs
+# import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -16,10 +16,18 @@ import geopandas as gpd
 
 
 def download_image(coords, time_range, 
+                   bands:list=['blue', 'green', 'red', 'nir08'], 
+                   cat_name:str='landsat-c2-l2',
+                   cloud_cov:int=5,
                    **kwargs):
     '''
     Downloads image cube from planetary computer for a given
-    set of coordinates, in a given set of bands.
+    set of decimal degree coordinates across a given time frame 
+    in a given set of bands in a specified catalog.
+    
+    Planetary Computer is used as the helper code for 
+    downloading COGs. Please check their documentation for 
+    catalog choices
     '''
     
     #Initiate Planetary Computer catalog instance
@@ -53,9 +61,6 @@ def download_image(coords, time_range,
     #Define other image constraints
     time_range = "2015-08-15/2015-12-31"
     bbox = bounds_latlon
-    band_names = ['blue', 'green', 'red', 'nir08']
-    cat_name = 'landsat-c2-l2'
-    cloud_cov = 5
 
     #Fill catalog instance
     search = catalog.search(collections=[cat_name], 
@@ -71,5 +76,15 @@ def download_image(coords, time_range,
     lc_epsg = proj.ext(item).epsg
     
     stack = stackstac.stack(items, epsg=lc_epsg, 
-                            assets=band_names,
-                            bounds_latlon=bounds_latlon, resolution=30)
+                            assets=bands,
+                            bounds_latlon=bounds_latlon, 
+                            resolution=30)
+    
+    monthly = stack.resample(time="MS").median("time", keep_attrs=True)
+    
+    merged = stackstac.mosaic(stack, dim="time", axis=None).squeeze().compute()
+    
+    #Save as an xr dataset object
+    merged_set = merged.to_dataset(dim='band')
+    
+    return merged_set
