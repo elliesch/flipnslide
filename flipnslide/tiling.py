@@ -8,8 +8,9 @@ class FlipnSlide:
     
 class Tiling:
     
-    def __init__(self, tile_size,
-                 tile_style = 'flipnslide',
+    def __init__(self, tile_size:int,
+                 tile_style:str = 'flipnslide',
+                 save:bool = True,
                  **kwargs):
         
         # Tunable params
@@ -241,3 +242,7 @@ class Tiling:
         return all_image_tiles, all_label_tiles, np.array(idx_tiles)
     
     ### ADD SAVE CODES HERE
+    ### np.save()
+    ### torch.save(x, 'tensor.pt')
+    ### torch.save(lst_tensors,'tensor_dataset.pt')
+    ### tensor_list = torch.load('tensor_dataset.pt')
