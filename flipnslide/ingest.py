@@ -1,3 +1,5 @@
+''' Ingest Images (right now only optimized for downloading COGs) '''
+
 from .util import download_image, preprocess
 
 
