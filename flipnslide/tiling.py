@@ -60,3 +60,184 @@ class Tiling:
         label_tiles = label_tiles.reshape(-1, n_labels, tile_size, tile_size)
 
         return image_tiles, label_tiles    
+    
+    def sliding_tile(channels, masks, tile_size):
+    
+        #find the tile indices
+        shape = channels.shape
+        side = max(shape)
+        n_channels = min(shape)
+        n_labels = min(masks.shape)
+        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+
+        #initialize the tile arrays
+        image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        label_tiles = np.empty([count_1d, count_1d, n_labels, tile_size, tile_size])
+
+        #fold into tiles
+        fold_idx = np.arange(0, side, int(tile_size/2))
+
+        for idx_x in range(len(fold_idx)-1):
+            for idx_y in range(len(fold_idx)-1):
+
+                #tile the images
+                # image_tile = channels[:, fold_idx[idx_x]:fold_idx[idx_x+2], fold_idx[idx_y]:fold_idx[idx_y+2]]
+                image_tile = channels[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                      fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+                image_tiles[idx_x, idx_y, :, :, :] = image_tile
+
+                #tile the labels
+                # label_tile = masks[:, fold_idx[idx_x]:fold_idx[idx_x+2], fold_idx[idx_y]:fold_idx[idx_y+2]]
+                label_tile = masks[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                   fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+                label_tiles[idx_x, idx_y, :, :, :] = label_tile
+
+        #define the tiles
+        image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
+        label_tiles = label_tiles.reshape(-1, n_labels, tile_size, tile_size)
+
+        return image_tiles, label_tiles  
+    
+    def sliding_transforms(channels, masks, tile_size):
+    
+        #find the tile indices
+        shape = channels.shape
+        side = max(shape)
+        n_channels = min(shape)
+        n_labels = min(masks.shape)
+        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+
+        #initialize the tile arrays
+        image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        label_tiles = np.empty([count_1d, count_1d, n_labels, tile_size, tile_size])
+        idx_tiles = []
+
+        #fold into tiles
+        fold_idx = np.arange(0, side, int(tile_size/2))
+
+        for idx_x in range(len(fold_idx)-1):
+            for idx_y in range(len(fold_idx)-1):
+
+                #tile the images
+                image_tile = channels[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                      fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+
+                #tile the labels
+                label_tile = masks[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                   fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+
+                #add rotational augmentations where needed
+                #where both are divisible by two, no rotations happen
+                if (idx_x % 2 != 0) & (idx_y % 2 != 0):
+                    image_tile = np.rot90(image_tile, k=3, axes=(1,2)) #270
+                    label_tile = np.rot90(label_tile, k=3, axes=(1,2))
+                    #track the indices
+                    idx_tiles.append(1)
+
+                elif (idx_x % 2 != 0) & (idx_y % 2 == 0):
+                    image_tile = np.rot90(image_tile, k=2, axes=(1,2)) #180
+                    label_tile = np.rot90(label_tile, k=2, axes=(1,2))
+                    #track the indices
+                    idx_tiles.append(2)
+
+                elif (idx_x % 2 == 0) & (idx_y % 2 != 0):
+                    image_tile = np.rot90(image_tile, k=1, axes=(1,2)) #90
+                    label_tile = np.rot90(label_tile, k=1, axes=(1,2))
+                    #track the indices
+                    idx_tiles.append(3)
+
+                else:
+                    #track the indices
+                    idx_tiles.append(0)
+
+                image_tiles[idx_x, idx_y, :, :, :] = image_tile
+                label_tiles[idx_x, idx_y, :, :, :] = label_tile
+
+        #define the tiles
+        image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
+        label_tiles = label_tiles.reshape(-1, n_labels, tile_size, tile_size)
+
+        ###======== TILL HERE THE CODE IS SLIDING TILES WITH ROTATION AUGMENTATION ADDED ========###
+        ###======== FOLLOWING IS INNER TILES WITH FLIP + ROTATION AUGMENTATION ADDED ========###
+
+        #find the tile indices for the 25/75% slide
+        inner_channels = channels[:, 64:-64, 64:-64]
+        inner_masks = masks[:, 64:-64, 64:-64]
+        shape = inner_channels.shape
+        side = max(shape)
+        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+
+        #initialize the tile arrays and starting point for index tracking
+        inner_image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        inner_label_tiles = np.empty([count_1d, count_1d, n_labels, tile_size, tile_size])
+        # idx_starting_point = max(max(idx_tiles)) + 1 #since there will be a zero
+
+        #fold into tiles
+        fold_idx = np.arange(0, side, int(tile_size/2))
+
+        if tile_size == 64:
+            adjuster = 1
+        elif tile_size == 128:
+            adjuster = 1
+        elif tile_size == 256:
+            adjuster = 2
+        elif tile_size == 512:
+            adjuster = 3
+
+        for idx_x in range(len(fold_idx)-adjuster):
+            for idx_y in range(len(fold_idx)-adjuster):
+
+                #tile the images
+                image_tile = inner_channels[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                            fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+
+                #tile the labels
+                label_tile = inner_masks[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
+                                         fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+
+                #add rotational augmentations and flip augmentations
+                #0 degrees gets no rotation and only flips
+                #90 degrees gets rotation and flips
+                #remaining rotations + flips are redundant
+                if (idx_x % 2 == 0) & (idx_y % 2 == 0):
+                    image_tile = image_tile[:,:,::-1] #horizontal flip
+                    label_tile = label_tile[:,:,::-1]
+                    #track the indices
+                    idx_tiles.append(4)
+
+                elif (idx_x % 2 == 0) & (idx_y % 2 != 0):
+                    image_tile = image_tile[:,::-1,:] #vertical flip
+                    label_tile = label_tile[:,::-1,:]
+                    #track the indices
+                    idx_tiles.append(5)
+
+                elif (idx_x % 2 != 0) & (idx_y % 2 != 0):
+                    image_tile = np.rot90(image_tile, k=1, axes=(1,2))
+                    label_tile = np.rot90(label_tile, k=1, axes=(1,2))
+                    image_tile = image_tile[:,:,::-1] 
+                    label_tile = label_tile[:,:,::-1]
+                    #track the indices
+                    idx_tiles.append(6)
+
+                elif (idx_x % 2 != 0) & (idx_y % 2 == 0):
+                    image_tile = np.rot90(image_tile, k=1, axes=(1,2))
+                    label_tile = np.rot90(label_tile, k=1, axes=(1,2))
+                    image_tile = image_tile[:,::-1,:] 
+                    label_tile = label_tile[:,::-1,:]
+                    #track the indices
+                    idx_tiles.append(7)
+
+                inner_image_tiles[idx_x, idx_y, :, :, :] = image_tile
+                inner_label_tiles[idx_x, idx_y, :, :, :] = label_tile
+
+        #define the tiles
+        inner_image_tiles = inner_image_tiles.reshape(-1, n_channels, tile_size, tile_size)
+        inner_label_tiles = inner_label_tiles.reshape(-1, n_labels, tile_size, tile_size)
+
+        ## Combine all the tiles
+        all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
+        all_label_tiles = np.concatenate((label_tiles, inner_label_tiles), axis=0)    
+
+        return all_image_tiles, all_label_tiles, np.array(idx_tiles)
+    
+    ### ADD SAVE CODES HERE
