@@ -12,6 +12,8 @@ dependencies:
   - numpy
   - matplotlib
   - scipy
+  - pystac
+  - planetary-computer
   - xarray
   - rioxarray
   - geopandas
@@ -20,5 +22,7 @@ dependencies:
     - torch
     - torchvision
     - tensorflow
+    - rasterio
     - osgeo
     - natsort
+    - stackstac
