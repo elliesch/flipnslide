@@ -1,14 +1,55 @@
-''' Tiling and Permutations -- Central Functionality '''
+''' Flip-n-Slide Tiling and Permutations -- Core Package Functionality '''
 
 import numpy as np
+import torch
 from .tiling import ImageIngest
+from .util import saver
 
 class Tiling:
     
     def __init__(self, tile_size:int=256,
                  tile_style:str = 'flipnslide',
-                 save:bool = True,
+                 data_type:str = 'tensor',
+                 save:bool = False,
                  **kwargs):
+        '''
+        Initialize Tiling with the given parameters.
+
+        Example:
+        Initialize the Tiling class to obtain a tensor of tiles sized 256 x 256:
+        >>> tiles = Tiling(image, tile_style='flipnslide')
+
+        Parameters:
+        - tile_size (int): Integer representing the size of the tile (default is 256).
+        - tile_style (str): String representing the tiling method, should be one of ['flipnslide', 'overlap', 'no_overlap'] (default is 'flipnslide').
+        - data_type (str): String representing output data type, should be one of ['tensor', 'array'], where 'tensor' is a PyTorch tensor and 'array' is a NumPy ndarray (default is 'tensor').
+        - save (bool): Boolean indicating whether to save the file to local memory (default is False).
+
+        Scientific Image Parameters:
+
+        Required Parameter for Use with PreDownloaded Image:
+        - image (numpy.ndarray): NumPy ndarray representing the large input image with one dimension for channels, one dimension for x pixels, and one dimension for y pixels.
+
+        OR
+
+        Required Parameters for Downloading Image:
+        - coords (List[float]): List of four floats indicating corners of the requested image in long/lat coordinates. Should follow this format: [southern_boundary, northern_boundary, eastern_boundary, western_boundary].
+        - time_range (str): String indicating the time range for the requested image. Should follow this format: 'YYYY-MM-DD/YYYY-MM-DD'.
+
+        Optional Parameters for Downloading Image:
+        - bands (List[str]): List indicating bands of the requested image (default is ['blue', 'green', 'red', 'nir08']).
+        - cat_name (List[str]): List indicating requested catalogs to query in Planetary Computer (default is ['landsat-c2-l2']).
+        - cloud_cov (int): Integer representing the maximum percentage of cloud cover for the requested image (default is 5).
+        - res (int): Integer representing the resolution of the requested image. Should match the resolution of the data catalog (default is 30).
+
+        Raises:
+        - ValueError: Raised if an invalid tile_style is provided. Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.
+        - AssertionError: Raised if input image is not a NumPy array or if 'coords' are not provided as a list of four floats.
+
+        Notes:
+        - The tiles are generated based on the specified tiling method (tile_style) and are returned as either a PyTorch tensor or a NumPy ndarray based on the data_type parameter.
+        - If 'save' is set to True, the generated tiles will be saved to local memory.
+        '''
         
         # Tunable params
         self.tile_size = tile_size
@@ -28,44 +69,54 @@ class Tiling:
                 assert len(coords) == 4 and all(isinstance(x, float) for x in coords), "'coords' should be a list of four floats."
                 assert isinstance(kwargs['time_range'], str), "'time_range' should be a string of the format 'YYYY-MM-DD/YYYY-MM-DD'."
                 
-                coords = kwargs['coords']
-                time_range = kwargs['time_range']
+                coords = kwargs.pop('coords')
+                time_range = kwargs.pop('time_range')
                 
             else:
                 raise ValueError("Either an 'image' or ('coords' and 'time_range') keyword arguments need to be provided.")
-                
-            ####!!!! for these i need to figure out if there's a way just to pass kwargs along!    
-            if 'bands' in kwargs:
-                bands = kwargs['bands']
-                
-            if 'cat_name' in kwargs:
-                cat_name = kwargs['cat_name']
-                
-            if 'cloud_cov' in kwargs:
-                cloud_cov = kwargs['cloud_cov']
-                
-            if 'res' in kwargs:
-                res = kwargs['res']
-                
-            ####!!!! once i figure out how to pass the kwargs, i can pass the kwargs to here!
-            image = ImageIngest(coords, time_range).image
+        
+            image = ImageIngest(coords, time_range, **kwargs).image
             
         # Tiling method to be implemented
+        if tile_style not in ['flipnslide', 'overlap', 'no_overlap']:
+            raise ValueError("Invalid style. Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.")
         
-        if tile_style = 'flipnslide':
+        if data_type == 'tensor':
+            if tile_style == 'flipnslide':            
+                self.tiles = torch.from_numpy(sliding_transforms(image, self.tile_size))
+            elif tile_style == 'overlap':
+                self.tiles = torch.from_numpy(sliding_tile(image, self.tile_size))
+            else:
+                self.tiles = torch.from_numpy(no_slide_tile(image, self.tile_size))
             
-            self.tiles = sliding_transforms(image, self.tile_size)
+        elif data_type == 'array':
+            if tile_style == 'flipnslide':            
+                self.tiles = sliding_transforms(image, self.tile_size)
+            elif tile_style == 'overlap':
+                self.tiles = sliding_tile(image, self.tile_size)
+            else:
+                self.tiles = no_slide_tile(image, self.tile_size)
             
-        elif tile_style = 'overlap_tile':
-            
-            self.tiles = sliding_tile(image, self.tile_size)
-        
-        else:
-            
-            self.tiles = no_slide_tile(image, self.tile_size)
+        # Save the data
+        if save == True:
+            saver(self.tiles, file_type=data_type, file_name=f'{tile_style}_tiles')      
             
 
-    def no_slide_tile(image, masks, tile_size):
+    def no_slide_tile(image, tile_size):
+        '''
+        Divide an image into non-overlapping tiles of specified size.
+
+        Parameters:
+        - image (numpy.ndarray): The input image to be divided into tiles.
+        - tile_size (int): The size of the tiles. The image will be divided into tiles of size
+          `tile_size x tile_size`.
+
+        Returns:
+        - numpy.ndarray: An array containing the tiles of the input image. The shape of the
+          returned array is `(num_tiles, num_channels, tile_size, tile_size)`, where `num_tiles`
+          is the total number of tiles and `num_channels` is the number of color channels in
+          the input image.
+        '''
 
         #find the tile indices
         shape = image.shape
@@ -92,6 +143,25 @@ class Tiling:
         return image_tiles 
     
     def sliding_tile(image, tile_size):
+        '''
+        Divide an image into overlapping tiles of specified size with a stride of half the tile size.
+
+        Parameters:
+        - image (numpy.ndarray): The input image to be divided into tiles.
+        - tile_size (int): The size of the tiles. The image will be divided into tiles of size
+          `tile_size x tile_size`.
+
+        Returns:
+        - numpy.ndarray: An array containing the tiles of the input image. The shape of the
+          returned array is `(num_tiles, num_channels, tile_size, tile_size)`, where `num_tiles`
+          is the total number of tiles and `num_channels` is the number of color channels in
+          the input image.
+
+        Notes:
+        - The tiles are generated with a sliding window approach, resulting in overlapping tiles
+          with a stride of half the tile size. This means that each pixel in the input image
+          will appear in multiple tiles, except for the pixels along the borders.
+        '''
     
         #find the tile indices
         shape = image.shape
@@ -119,6 +189,29 @@ class Tiling:
         return image_tiles
     
     def sliding_transforms(image, tile_size):
+        '''
+        Divide an image into overlapping tiles with rotational and flip augmentations applied to each tile.
+
+        Parameters:
+        - image (numpy.ndarray): The input image to be divided into tiles.
+        - tile_size (int): The size of the tiles. The image will be divided into tiles of size
+          `tile_size x tile_size`.
+
+        Returns:
+        - numpy.ndarray: An array containing the tiles of the input image with augmentations applied.
+          The shape of the returned array is `(num_tiles, num_channels, tile_size, tile_size)`, where
+          `num_tiles` is the total number of tiles and `num_channels` is the number of color channels
+          in the input image.
+
+        Notes:
+        - The tiles are generated with a sliding window approach, resulting in overlapping tiles
+          with a stride of half, one quarter, and three quarters the tile size. This means that each 
+          pixel in the input image will appear in multiple tiles, except for the pixels along the borders.
+        - Rotational and flip augmentations are applied to each tile based on its position.
+        - Augmentations include horizontal flips, vertical flips, and rotations of 90, 180, and 270 degrees.
+          Distinct augmentations are applied to each tile that overlap with another to eliminate
+          redundancies between overlapping pixels.
+        '''
     
         #find the tile indices
         shape = image.shape
@@ -233,9 +326,3 @@ class Tiling:
         all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
 
         return all_image_tiles
-    
-    ### ADD SAVE CODES HERE
-    ### np.save()
-    ### torch.save(x, 'tensor.pt')
-    ### torch.save(lst_tensors,'tensor_dataset.pt')
-    ### tensor_list = torch.load('tensor_dataset.pt')
