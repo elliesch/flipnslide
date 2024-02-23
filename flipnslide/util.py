@@ -16,8 +16,7 @@ import torch
 
 
 
-def download_image(coords, time_range, bands, cat_name,
-                   cloud_cov, res, **kwargs):
+def download_image(coords, time_range, **kwargs):
     '''
     Downloads image cube from planetary computer for a given
     set of decimal degree coordinates across a given time frame 
@@ -27,6 +26,12 @@ def download_image(coords, time_range, bands, cat_name,
     downloading COGs. Please check their documentation for 
     catalog choices
     '''
+    
+    # Define optional params with defaults
+    bands = kwargs.get('bands', ['blue', 'green', 'red', 'nir08'])
+    cat_name = kwargs.get('cat_name', ['landsat-c2-l2'])
+    cloud_cov = kwargs.get('cloud_cov', 5)
+    res = kwargs.get('res', 30)
     
     #Initiate Planetary Computer catalog instance
     catalog = pystac_client.Client.open(
