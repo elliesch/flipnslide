@@ -74,9 +74,12 @@ def download_image(coords, time_range, bands, cat_name,
                             bounds_latlon=bounds_latlon, 
                             resolution=res)
     
-    monthly = stack.resample(time="MS").median("time", keep_attrs=True)
+    #Future functionality will allow for time resolution
+    # monthly = stack.resample(time="MS").median("time", keep_attrs=True)
     
-    merged = stackstac.mosaic(stack, dim="time", axis=None).squeeze().compute()
+    #For now average across time
+    med_stack = stack.median(dim='time', keep_attrs=True)
+    merged = stackstac.mosaic(med_stack, dim="time", axis=None).squeeze().compute()
     
     #Move to a numpy array with correct dimensions
     merged_set = merged.to_dataset(dim='band')
@@ -93,11 +96,10 @@ def preprocess(data, **kwargs):
     Then standardizes the data cube, saving the cleaned data.
     '''
     
+    #In a future version:
     #Throw out time frames with too many nans
-    ###!!!>>> HAVE TO FIGURE OUT WHAT DIMS WOULD BE TIME <<<!!!###
     
     #Fills any nans using scipy interpolate 
-    ###!!!>>> DOUBLE CHECK THAT THIS SHAPE USING CORRECT DIM <<<!!!###
     band_count = data.shape[0]
     
     for band in range(band_count):
@@ -108,13 +110,13 @@ def preprocess(data, **kwargs):
     #!> A good test here is to check that there aren't any nans <!#
         
     #Shift and scale the data cube, band-by-band
-    ###!!!>>> DOUBLE CHECK THAT BAND_COUNT USING CORRECT DIM <<<!!!###
     normed_data = np.zeros(data.shape)
 
     for band in range(band_count):
         normed_data[band] = ((data[band] - np.mean(data[band]))/np.std(data[band]))
         
     return normed_data
+
 
 def saver(tiles,
           file_type:str = 'tensor', 
