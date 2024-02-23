@@ -12,6 +12,7 @@ import stackstac
 import xarray as xr
 import geopandas as gpd
 from scipy.interpolate import NearestNDInterpolator
+import torch
 
 
 
@@ -114,3 +115,17 @@ def preprocess(data, **kwargs):
         normed_data[band] = ((data[band] - np.mean(data[band]))/np.std(data[band]))
         
     return normed_data
+
+def saver(tiles,
+          file_type:str = 'tensor', 
+          save_path:str = '',
+          file_name:str = 'tiles',
+          **kwargs):
+    '''
+    Saves data to file, as either numpy ndarrays or pytorch tensors.
+    '''
+    if file_type == 'tensor':
+        torch.save(tiles, f'{save_path}{file_name}.pt')
+    
+    elif file_type == 'array':
+        np.save(f'{save_path}{file_name}.npy', tiles)
