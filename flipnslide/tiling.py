@@ -4,6 +4,7 @@ import numpy as np
 import torch
 from .tiling import ImageIngest
 from .util import saver
+from .viz import ingest_viz, crop_viz, tile_viz
 
 
 
@@ -13,6 +14,8 @@ class Tiling:
                  tile_style:str = 'flipnslide',
                  data_type:str = 'tensor',
                  save:bool = False,
+                 viz:bool = False,
+                 verbose:bool = False,
                  **kwargs):
         '''
         Initialize Tiling with the given parameters.
@@ -35,6 +38,9 @@ class Tiling:
         - data_type (str): String representing output data type, should be one of ['tensor', 'array'], 
           where 'tensor' is a PyTorch tensor and 'array' is a NumPy ndarray (default is 'tensor').
         - save (bool): Boolean indicating whether to save the file to local memory (default is False).
+        - viz (bool): Boolean indicating whether to show visualizations of image and 
+          tiles (default is False).
+        - verbose (bool): Boolean indicating whether to print stages of tiling (default is False).
 
         Scientific Image Parameters:
 
@@ -85,6 +91,9 @@ class Tiling:
             
             image = kwargs['image']
             
+            if verbose == True:
+                print('Provided image is being processed...')
+            
         else:
             
             if 'coords' and 'time_range' in kwargs:
@@ -97,16 +106,35 @@ class Tiling:
                 
             else:
                 raise ValueError("Either an 'image' or ('coords' and 'time_range') keyword arguments need to be provided.")
+                
+            if verbose == True:
+                print('Requested image is being downloaded via Planetary Computer...')
         
             image = ImageIngest(coords, time_range, **kwargs).image
+        
+        # Visualize imported image
+        if viz == True or verbose == True:
+            ingest_viz(image)
             
         # Crop image to square divisible by tile size
         if image.shape[-1] % self.tile_size != 0 or image.shape[-2] % self.tile_size != 0:
-            image = crop(image, self.tile_size)
+            
+            if verbose == True:
+                print('Image is being cropped to a square that is divisible by the tile size...')
+            
+            crop = crop(image, self.tile_size)
+            
+            if viz == True or verbose == True:
+                crop_viz(image, crop)
+                
+            image = crop
             
         # Implement chosen tiling method
         if tile_style not in ['flipnslide', 'overlap', 'no_overlap']:
             raise ValueError("Invalid style. Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.")
+        
+        if verbose == True:
+                print(f'Image is being tiled using the {tile_style} approach...')
         
         if tile_style == 'flipnslide':            
             self.tiles = sliding_transforms(image, self.tile_size)
@@ -114,14 +142,27 @@ class Tiling:
             self.tiles = sliding_tile(image, self.tile_size)
         else:
             self.tiles = no_slide_tile(image, self.tile_size)
+            
+        if viz == True or verbose=True:
+            tile_viz(self.tiles)
         
         # Optional Move to tensor
         if data_type == 'tensor':
+            if verbose == True:
+                print('Tiles are being converted to PyTorch tensor...')
+            
             self.tiles = torch.from_numpy(self.tiles)
             
         # Save the data
         if save == True:
+            
+            if verbose == True:
+                print('Tiles are being saved to local directory...')
+                
             saver(self.tiles, file_type=data_type, file_name=f'{tile_style}_tiles') 
+            
+        if verbose == True:
+                print("Tiling complete. Access tiles as a '.tiles' attribute.")
             
             
             
