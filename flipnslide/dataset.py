@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import Dataset, DataLoader
 
+
+
 class TiledDataset:
     
     def __init__(self, tiles,
@@ -16,7 +18,28 @@ class TiledDataset:
                  batch_size,
                  **kwargs):
         '''
+        Initialize a TiledDataset object.
+
+        Parameters:
+        - tiles (list): A list containing the dataset tiles.
+        - permute_idx (int): Index for permutation.
+        - set_type (str): Type of dataset. Default is 'full'.
+        - split (float): Percentage of data to use for testing. Default is 0.1.
+        - randomize_permute (bool): Whether to randomize on permutation index. Default is False.
+        - state (int): Random state for reproducibility. Default is 18.
+        - batch_size: Size of batches to use in data loading.
+
+        **kwargs: Additional keyword arguments.
+
+        Raises:
+        - AssertionError: If randomize_permute is True.
+
+        Notes:
+        - This method initializes a TiledDataset object, which represents a dataset split into tiles.
+        - It splits the data into training and testing sets, constructs PyTorch datasets, and builds dataloaders.
+        - Note that DataLoaders preserving knowledge of permutation number are not available in this release.
         '''
+        
         #Add warning that randomize permute is not functional yet
         assert not (randomize_permute
                    ), "DataLoaders that preserve knowledge of permutation number aren't available in this release."
@@ -31,13 +54,30 @@ class TiledDataset:
         self.test_dataset = TileDataset(test_tiles)
         
         #Finally build into PyTorch Dataloaders
-        self.dataloader = DataLoader(self.train_dataset, batch_size=batch_size)        
-        
-        
+        self.dataloader = DataLoader(self.train_dataset, batch_size=batch_size)              
         
         
     def train_test(self, tiles, permute_idx, 
                    split, randomize_permute, state):
+        '''
+        Split data into training and testing sets.
+
+        Parameters:
+        - tiles (list): A list containing the dataset tiles.
+        - permute_idx (list or array-like): Index referring to unique permutation number of each tile.
+        - split (float): Percentage of data to use for testing.
+        - randomize_permute (bool): Whether to randomize on permutation index.
+        - state (int): Random state for reproducibility.
+
+        Returns:
+        - train_arrays (list): List of arrays containing training data.
+        - test_arrays (list): List of arrays containing testing data.
+
+        Notes:
+        - This function splits the input data into training and testing sets.
+        - If randomize_permute is True, the function splits data based on unique permutation indices.
+        - Otherwise, it splits the data directly.
+        '''
     
         train_arrays = []
         test_arrays = []
@@ -63,11 +103,26 @@ class TiledDataset:
 
         return train_arrays, test_arrays
     
+
     
 class TileDataset(Dataset):
     '''
-    Class to create iterable custom PyTorch Dataset for streaming through GPU.
-    Follows PyTorch protocol from documentation there.
+    Dataset class for creating iterable custom PyTorch datasets for streaming through GPU.
+
+    Args:
+    - tiles (list): List containing the dataset tiles.
+    - transform (callable, optional): Optional transform to be applied to the tiles.
+
+    Attributes:
+    - tiles (list): List containing the dataset tiles.
+    - transform (callable or None): Transform function to be applied to the tiles.
+
+    Methods:
+    - __len__(self): Returns the length of the dataset.
+    - __getitem__(self, index): Returns the item at the specified index.
+
+    Note:
+    - This class follows the PyTorch Dataset protocol as documented.
     '''
     
     def __init__(self, tiles, transform=None):
