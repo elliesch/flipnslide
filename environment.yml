@@ -12,6 +12,7 @@ dependencies:
   - numpy
   - matplotlib
   - scipy
+  - scikit-learn
   - pystac
   - planetary-computer
   - xarray
