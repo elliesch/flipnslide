@@ -8,6 +8,78 @@ from .viz import ingest_viz, crop_viz, tile_viz
 
 
 
+class FlipnSlide:
+    
+    def __init__(self, tile_size:int=256,
+                 data_type:str = 'tensor',
+                 save:bool = False,
+                 viz:bool = False,
+                 verbose:bool = False,
+                 **kwargs):
+        '''
+        Initialize abbreviated tiling class that only uses Flip-n-Slide tiling strategy.
+        
+        Example:
+        Initialize the FlipnSlide class to obtain a tensor of tiles sized 256 x 256:
+        >>> tiles = FlipnSlide(image).tiles
+        
+        Attributes:
+        - tiles (numpy.ndarray OR torch.tensor): PyTorch tensor or a NumPy ndarray. The shape of the
+          returned array is `(num_tiles, num_channels, tile_size, tile_size)`, where `num_tiles`
+          is the total number of tiles and `num_channels` is the number of color channels in
+          the input image.
+        - tile_size (int): Integer representing the size of the tile side.
+
+        Tiling Parameters:
+        - tile_size (int): Integer representing the size of the tile (default is 256).
+        - tile_style (str): String representing the tiling method, should be one of 
+          ['flipnslide', 'overlap', 'no_overlap'] (default is 'flipnslide').
+        - data_type (str): String representing output data type, should be one of ['tensor', 'array'], 
+          where 'tensor' is a PyTorch tensor and 'array' is a NumPy ndarray (default is 'tensor').
+        - save (bool): Boolean indicating whether to save the file to local memory (default is False).
+        - viz (bool): Boolean indicating whether to show visualizations of image and 
+          tiles (default is False).
+        - verbose (bool): Boolean indicating whether to print stages of tiling (default is False).
+
+        Scientific Image Parameters:
+
+        Required Parameter for Use with PreDownloaded Image:
+        - image (numpy.ndarray): NumPy ndarray representing the large input image. The dimensions must 
+          be in the following order (n_channels, n_pix, n_pix). This release will reprocess the image 
+          to be a square that is divisible by the tile size.
+
+        OR
+
+        Required Parameters for Downloading Image:
+        - coords (List[float]): List of four floats indicating corners of the requested image in 
+          long/lat coordinates. Should follow this format: 
+          [southern_boundary, northern_boundary, eastern_boundary, western_boundary].
+        - time_range (str): String indicating the time range for the requested image. 
+          Should follow this format: 'YYYY-MM-DD/YYYY-MM-DD'.
+
+        Optional Parameters for Downloading Image:
+        - bands (List[str]): List indicating bands of the requested image 
+          (default is ['blue', 'green', 'red', 'nir08']).
+        - cat_name (List[str]): List indicating requested catalogs to query in Planetary Computer 
+          (default is ['landsat-c2-l2']).
+        - cloud_cov (int): Integer representing the maximum percentage of cloud cover for the 
+          requested image (default is 5).
+        - res (int): Integer representing the resolution of the requested image. Should match the 
+          resolution of the data catalog (default is 30).
+
+        Raises:
+        - ValueError: Raised if an invalid tile_style is provided. 
+          Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.
+        - AssertionError: Raised if input image is not a NumPy array or if 'coords' are not provided 
+          as a list of four floats.
+        '''
+        
+        self.tile_size = tile_size
+        
+        self.tiles = Tiling(tile_size, , tile_style='flipnslide',
+                            data_type, save, viz, verbose, **kwargs).tiles
+
+
 class Tiling:
     
     def __init__(self, tile_size:int=256,
@@ -22,7 +94,7 @@ class Tiling:
 
         Example:
         Initialize the Tiling class to obtain a tensor of tiles sized 256 x 256:
-        >>> tiles = Tiling(image, tile_style='flipnslide')
+        >>> tiles = Tiling(image, tile_style='flipnslide').tiles
         
         Attributes:
         - tiles (numpy.ndarray OR torch.tensor): PyTorch tensor or a NumPy ndarray. The shape of the
@@ -98,8 +170,11 @@ class Tiling:
             
             if 'coords' and 'time_range' in kwargs:
                 
-                assert len(coords) == 4 and all(isinstance(x, float) for x in coords), "'coords' should be a list of four floats."
-                assert isinstance(kwargs['time_range'], str), "'time_range' should be a string of the format 'YYYY-MM-DD/YYYY-MM-DD'."
+                assert (len(coords) == 4 
+                        and all(isinstance(x, float) for x in coords)
+                       ), "'coords' should be a list of four floats."
+                assert (isinstance(kwargs['time_range'], str)
+                       ), "'time_range' should be a string of the format 'YYYY-MM-DD/YYYY-MM-DD'."
                 
                 coords = kwargs.pop('coords')
                 time_range = kwargs.pop('time_range')
