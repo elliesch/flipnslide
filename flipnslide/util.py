@@ -65,6 +65,9 @@ def download_image(coords, time_range,
     }
 
     bounds_latlon = rasterio.features.bounds(area_of_interest)
+    
+    if verbose == True:
+        print('Search Planetary Computer for requested image/s...')
 
     #Find items in Planetary Computer within search parameters
     search = catalog.search(collections=cat_name, 
@@ -87,6 +90,9 @@ def download_image(coords, time_range,
     #Future functionality will allow for time resolution
     # monthly = stack.resample(time="MS").median("time", keep_attrs=True)
     
+    if verbose == True:
+        print('Stack image/s across time into one image...')
+    
     #For now average across time
     merged = stackstac.mosaic(stack, dim="time", axis=None).squeeze().compute()
     
@@ -97,7 +103,7 @@ def download_image(coords, time_range,
     return image_data
 
 
-def preprocess(data, **kwargs):
+def preprocess(data, verbose:bool=False, **kwargs):
     '''
     Preprocesses image cube to prepare for use with ML algorithms.
     
@@ -109,6 +115,9 @@ def preprocess(data, **kwargs):
     #Throw out time frames with too many nans
     
     #Fills any nans using scipy interpolate 
+    if verbose == True:
+        print('Fill in nans...')
+    
     band_count = data.shape[0]
     
     for band in range(band_count):
@@ -119,6 +128,9 @@ def preprocess(data, **kwargs):
     #!> A good test here is to check that there aren't any nans <!#
         
     #Shift and scale the data cube, band-by-band
+    if verbose == True:
+        print('Standardize image for use with machine learning...')
+        
     normed_data = np.zeros(data.shape)
 
     for band in range(band_count):
