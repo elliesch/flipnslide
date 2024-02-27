@@ -8,7 +8,7 @@ from .viz import ingest_viz
 class ImageIngest:
     
     def __init__(self, coords, time_range, viz:bool=False, **kwargs):
-            '''
+        '''
         Initialize ImageIngest to download and preprocess an image.
 
         Parameters:
