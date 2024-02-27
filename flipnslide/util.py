@@ -16,7 +16,9 @@ import torch
 
 
 
-def download_image(coords, time_range, **kwargs):
+def download_image(coords, time_range, 
+                   verbose:bool=False,
+                   **kwargs):
     '''
     Downloads image cube from planetary computer for a given
     set of decimal degree coordinates across a given time frame 
@@ -33,6 +35,9 @@ def download_image(coords, time_range, **kwargs):
     cloud_cov = kwargs.get('cloud_cov', 5)
     res = kwargs.get('res', 30)
     
+    if verbose == True:
+        print('Initialize the Planetary Computer connection...')
+        
     #Initiate Planetary Computer catalog instance
     catalog = pystac_client.Client.open(
         "https://planetarycomputer.microsoft.com/api/stac/v1",
@@ -71,11 +76,10 @@ def download_image(coords, time_range, **kwargs):
     items = search.get_all_items()
     
     #Median stack images by month, constraining resolution
-    lc_items = search.item_collection()
-    item = lc_items[0]
-    lc_epsg = proj.ext(item).epsg
+    item = items[0]
+    epsg = proj.ext(item).epsg
     
-    stack = stackstac.stack(items, epsg=lc_epsg, 
+    stack = stackstac.stack(items, epsg=epsg, 
                             assets=bands,
                             bounds_latlon=bounds_latlon, 
                             resolution=res)
@@ -84,8 +88,7 @@ def download_image(coords, time_range, **kwargs):
     # monthly = stack.resample(time="MS").median("time", keep_attrs=True)
     
     #For now average across time
-    med_stack = stack.median(dim='time', keep_attrs=True)
-    merged = stackstac.mosaic(med_stack, dim="time", axis=None).squeeze().compute()
+    merged = stackstac.mosaic(stack, dim="time", axis=None).squeeze().compute()
     
     #Move to a numpy array with correct dimensions
     merged_set = merged.to_dataset(dim='band')
