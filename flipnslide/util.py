@@ -71,6 +71,7 @@ def download_image(coords, time_range, **kwargs):
     items = search.get_all_items()
     
     #Median stack images by month, constraining resolution
+    lc_items = search.item_collection()
     item = lc_items[0]
     lc_epsg = proj.ext(item).epsg
     
