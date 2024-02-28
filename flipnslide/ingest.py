@@ -1,13 +1,15 @@
 ''' Ingest Images from Planetary Computer'''
 
-from .util import download_image, preprocess
-from .viz import ingest_viz
+from util import download_image, preprocess
+from viz import ingest_viz
 
 
 
 class ImageIngest:
     
-    def __init__(self, coords, time_range, viz:bool=False, **kwargs):
+    def __init__(self, coords, time_range, 
+                 viz:bool=False, verbose:bool=False, 
+                 **kwargs):
         '''
         Initialize ImageIngest to download and preprocess an image.
 
@@ -54,7 +56,12 @@ class ImageIngest:
             self.res = kwargs['res']
         
         #Import image and preprocess
-        raw_image = download_image(coords, time_range, **kwargs)
+        if verbose == True:
+            raw_image = download_image(coords, time_range, 
+                                       verbose=True, **kwargs)
+            
+        else:
+            raw_image = download_image(coords, time_range, **kwargs)
         
         self.image = preprocess(raw_image)
         
