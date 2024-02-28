@@ -184,8 +184,12 @@ class Tiling:
                 
             if verbose == True:
                 print('Requested image is being downloaded via Planetary Computer...')
-        
-            image = ImageIngest(coords, time_range, **kwargs).image
+                
+                image = ImageIngest(coords, time_range, 
+                                    verbose = True, **kwargs).image
+                
+            else:
+                image = ImageIngest(coords, time_range, **kwargs).image
         
         # Visualize imported image
         if viz == True or verbose == True:
@@ -241,7 +245,7 @@ class Tiling:
             
             
             
-    def crop(image, tile_size):
+    def crop(self, image, tile_size):
         '''
         Crop the input image to the nearest multiple of tile_size along the spatial dimensions.
 
@@ -264,7 +268,7 @@ class Tiling:
         return crop
             
 
-    def no_slide_tile(image, tile_size):
+    def no_slide_tile(self, image, tile_size):
         '''
         Subset an image into non-overlapping tiles of specified size.
 
@@ -305,7 +309,7 @@ class Tiling:
         return image_tiles 
     
     
-    def sliding_tile(image, tile_size):
+    def sliding_tile(self, image, tile_size):
         '''
         Subset an image into overlapping tiles of specified size with a stride of half the tile size.
 
@@ -352,7 +356,7 @@ class Tiling:
         return image_tiles
     
     
-    def sliding_transforms(image, tile_size):
+    def sliding_transforms(self, image, tile_size):
         '''
         Subset an image into overlapping tiles with rotational and flip augmentations applied to each tile.
 
