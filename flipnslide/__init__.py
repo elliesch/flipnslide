@@ -12,7 +12,7 @@ This is initialized with the following modules:
 __version__ = '0.0.1'
 __all__ = ['ingest', 'tiling', 'dataset', 'viz', 'util']
 __author__ = 'elliesch <ellianna@berkeley.edu>'
-__minimum_python_version__ = '3.7'
+__minimum_python_version__ = '3.8'
 
 from .ingest import *
 from .tiling import *
