@@ -1,13 +1,15 @@
 ''' Test ingest.py '''
 
 import pytest
-from .ingest import ImageIngest
+import numpy as np
+from ..ingest import ImageIngest
 
 
 
 # Test case for initializing ImageIngest object
 def test_imageingest():
     
+    # Initial conditions to test
     coords = [36.473972, 39.073972, -120.831297, -124.031297]
     time_range = '2020-01-31/2021-01-31'
     
@@ -19,6 +21,9 @@ def test_imageingest():
     
     # Test that an image is downloaded
     assert isinstance(image_ingest.image, np.ndarray)
+    
+    # Test that the image has the expected number of dims
+    assert len(image_ingest.image.shape)
     
 
 if __name__ == '__main__':
