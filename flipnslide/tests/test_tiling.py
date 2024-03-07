@@ -2,6 +2,7 @@
 
 import pytest
 import numpy as np
+import torch
 from ..tiling import FlipnSlide, Tiling
 
 
@@ -86,6 +87,17 @@ def test_crop():
     # Test that the image is cropped to a size that fits the tile_size
     assert shape[-1] % tile_size == 0
     
+    
+def test_torch():
+    
+    # Initialize tiles
+    no_overlap = Tiling(tile_size=tile_size,
+                        tile_style='no_overlap',
+                        data_type='tensor', 
+                        image=sample_image)
+    
+    # Test that tiles are a Torch tensor
+    assert isinstance(no_overlap.tiles, torch.Tensor),
     
 
 if __name__ == '__main__':
