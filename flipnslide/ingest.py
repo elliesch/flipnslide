@@ -66,6 +66,6 @@ class ImageIngest:
         self.image = preprocess(raw_image)
         
         #Visualize the preprocessed image
-        if viz == True:
+        if viz == True or verbose == True:
             ingest_viz(self.image)
             
