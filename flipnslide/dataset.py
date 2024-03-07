@@ -99,7 +99,7 @@ class TiledDataset:
             permutation = len(np.unique(permute_idx))
             
             train_data_arrays = []
-            train_test_arrays = []
+            test_data_arrays = []
 
             for ii in range(permutation):
                 perm_mask = permute_idx == ii
