@@ -6,12 +6,11 @@ from ..ingest import ImageIngest
 
 
 
-# Test case for initializing ImageIngest object
 def test_imageingest():
     
     # Initial conditions to test
-    coords = [36.473972, 39.073972, -120.831297, -124.031297]
-    time_range = '2020-01-31/2021-01-31'
+    coords = [40.730610, 40.850610, -73.865242, -74.031297]
+    time_range = '2023-01-31/2023-02-28'
     
     image_ingest = ImageIngest(coords, time_range)
     
