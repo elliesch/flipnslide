@@ -9,16 +9,24 @@ from ..tiling import FlipnSlide, Tiling
 @pytest.fixture
 def sample_image():
     # Create a sample image for testing
-    return np.random.rand(3, 5120, 5120)  
+    return np.random.rand(3, 5120, 5120) 
+
+
+tile_size = 256
+
 
 def test_flipnslide(sample_image):
     # Test tiling with the flipnslide strategy
-    flipnslide = FlipnSlide(tile_size=256, data_type='array')
-    tiles = flipnslide.tiles(sample_image)
-
-    assert isinstance(tiles, np.ndarray)
-    # need to figure out this number
-    # assert tiles.shape[0] == ?
+    flipnslide = FlipnSlide(tile_size=tile_size, 
+                            data_type='array', 
+                            image=sample_image)
+    
+    # Test that a numpy array is returned and that it is the correct dims
+    assert isinstance(flipnslide.tiles, np.ndarray)
+    assert len(flipnslide.tiles.shape) == 4
+    
+    # Test that the right amount of tiles were created
+    assert tiles.shape[0] == 2890
     
 
 def test_tiling(sample_image):
