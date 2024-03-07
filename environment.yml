@@ -5,24 +5,22 @@ channels:
 
 dependencies:
   - python>=3.10
-  - os
-  - glob
-  - random
   - pandas
   - numpy
   - matplotlib
   - scipy
   - scikit-learn
   - pystac
-  - planetary-computer
   - xarray
   - rioxarray
   - geopandas
+  - ipykernel
   - pip
   - pip:
     - torch
     - torchvision
     - tensorflow
+    - planetary-computer
     - rasterio
     - osgeo
     - natsort
