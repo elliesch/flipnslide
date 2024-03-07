@@ -100,7 +100,7 @@ def test_torch():
                         image=sample_image)
     
     # Test that tiles are a Torch tensor
-    assert isinstance(no_overlap.tiles, torch.Tensor),
+    assert isinstance(no_overlap.tiles, torch.Tensor)
     
 
 if __name__ == '__main__':
