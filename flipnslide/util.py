@@ -76,7 +76,7 @@ def download_image(coords, time_range,
                             query={'eo:cloud_cover': {'lt': cloud_cov}
                                   })
     
-    items = search.get_all_items()
+    items = search.item_collection()
     
     #Median stack images by month, constraining resolution
     item = items[0]
