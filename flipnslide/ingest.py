@@ -1,7 +1,7 @@
 ''' Ingest Images from Planetary Computer'''
 
-from util import download_image, preprocess
-from viz import ingest_viz
+from .util import download_image, preprocess
+from .viz import ingest_viz
 
 
 
