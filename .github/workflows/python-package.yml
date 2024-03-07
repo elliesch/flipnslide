@@ -33,8 +33,9 @@ jobs:
         activate-environment: flipnslide-dev
         environment-file: environment.yml
         use-mamba: true
-    - name: Install flake8
+    - name: Activate conda environment and install flake8
       run: |
+        conda activate flipnslide-dev
         mamba install --yes flake8
     - name: Lint with flake8
       run: |
