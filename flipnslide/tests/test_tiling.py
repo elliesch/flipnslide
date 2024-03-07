@@ -32,6 +32,9 @@ def test_flipnslide(sample_image):
     # Test that the right amount of tiles were created
     assert flipnslide.tiles.shape[0] == 2890
     
+    # Test that permute_idx was created and is correct length
+    assert len(flipnslide.tiles) == len(flipnslide.permute_idx)
+    
 
 def test_tiling(sample_image):
 
