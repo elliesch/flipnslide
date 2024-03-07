@@ -175,8 +175,8 @@ class Tiling:
             
             if 'coords' and 'time_range' in kwargs:
                 
-                assert (len(coords) == 4 
-                        and all(isinstance(x, float) for x in coords)
+                assert (len(kwargs['coords']) == 4 
+                        and all(isinstance(x, float) for x in kwargs['coords'])
                        ), "'coords' should be a list of four floats."
                 assert (isinstance(kwargs['time_range'], str)
                        ), "'time_range' should be a string of the format 'YYYY-MM-DD/YYYY-MM-DD'."
