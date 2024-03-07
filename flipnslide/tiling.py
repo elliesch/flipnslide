@@ -202,7 +202,7 @@ class Tiling:
             if verbose == True:
                 print('Image is being cropped to a square that is divisible by the tile size...')
             
-            crop = crop(image, self.tile_size)
+            crop = self.crop(image, self.tile_size)
             
             if viz == True or verbose == True:
                 crop_viz(image, crop)
@@ -217,11 +217,11 @@ class Tiling:
                 print(f'Image is being tiled using the {tile_style} approach...')
         
         if tile_style == 'flipnslide':            
-            self.tiles = sliding_transforms(image, self.tile_size)
+            self.tiles = self.sliding_transforms(image, self.tile_size)
         elif tile_style == 'overlap':
-            self.tiles = sliding_tile(image, self.tile_size)
+            self.tiles = self.sliding_tile(image, self.tile_size)
         else:
-            self.tiles = no_slide_tile(image, self.tile_size)
+            self.tiles = self.no_slide_tile(image, self.tile_size)
             
         if viz == True or verbose==True:
             tile_viz(self.tiles)
