@@ -11,11 +11,11 @@ class TiledDataset:
     
     def __init__(self, tiles,
                  permute_idx,
+                 batch_size,
                  set_type:str='full',
                  split:float=0.1,
                  randomize_permute:bool=False,
                  state:int=18,
-                 batch_size,
                  **kwargs):
         '''
         Initialize a TiledDataset object.
