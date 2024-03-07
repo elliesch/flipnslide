@@ -2,7 +2,7 @@
 
 import numpy as np
 import torch
-from .tiling import ImageIngest
+from .ingest import ImageIngest
 from .util import saver
 from .viz import ingest_viz, crop_viz, tile_viz
 
