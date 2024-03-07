@@ -94,7 +94,7 @@ def download_image(coords, time_range,
         print('Stack image/s across time into one image...')
     
     #For now average across time
-    merged = stackstac.mosaic(stack, dim="time", axis=None).squeeze().compute()
+    merged = stack.median("time", keep_attrs=True).squeeze().compute()
     
     #Move to a numpy array with correct dimensions
     merged_set = merged.to_dataset(dim='band')
