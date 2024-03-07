@@ -45,12 +45,7 @@ class TiledDataset:
         - This method initializes a TiledDataset object, which represents a dataset split into tiles.
         - It splits the data into training and testing sets, constructs PyTorch datasets, and builds dataloaders.
         - Note that DataLoaders preserving knowledge of permutation number are not available in this release.
-        '''
-        
-        #Add warning that randomize permute is not functional yet
-        assert not (randomize_permute
-                   ), "DataLoaders that preserve knowledge of permutation number aren't available in this release."
-            
+        ''' 
         
         #First split the data
         if 'permute_split' in kwargs:
@@ -91,6 +86,10 @@ class TiledDataset:
         - If randomize_permute is True, the function splits data based on unique permutation indices.
         - Otherwise, it splits the data directly.
         '''
+        
+        #Add warning that randomize permute is not functional yet
+        assert not (randomize_permute
+                   ), "DataLoaders that preserve knowledge of permutation number aren't available in this release."
     
         train_arrays = []
         test_arrays = []
@@ -145,7 +144,7 @@ class TileDataset(Dataset):
     '''
     
     def __init__(self, tiles, transform=None):
-        self.tiles = channel_data
+        self.tiles = tiles
         self.transform = transform
 
     def __len__(self):
