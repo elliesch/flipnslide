@@ -33,6 +33,9 @@ jobs:
         activate-environment: flipnslide-dev
         environment-file: environment.yml
         use-mamba: true
+    - name: Install flake8
+      run: |
+        mamba install --yes flake8
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
