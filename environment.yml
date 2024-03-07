@@ -22,6 +22,6 @@ dependencies:
     - tensorflow
     - planetary-computer
     - rasterio
-    - osgeo
+    - GDAL
     - natsort
     - stackstac
