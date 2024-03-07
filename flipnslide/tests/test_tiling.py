@@ -5,6 +5,7 @@ import numpy as np
 from ..tiling import FlipnSlide, Tiling
 
 
+tile_size = 256
 
 @pytest.fixture
 def sample_image():
@@ -12,10 +13,9 @@ def sample_image():
     return np.random.rand(3, 5120, 5120) 
 
 
-tile_size = 256
-
-
 def test_flipnslide(sample_image):
+    '''This also tests `sliding_transforms` method on `Tiling` class.'''
+    
     # Test tiling with the flipnslide strategy
     flipnslide = FlipnSlide(tile_size=tile_size, 
                             data_type='array', 
@@ -25,31 +25,68 @@ def test_flipnslide(sample_image):
     assert isinstance(flipnslide.tiles, np.ndarray)
     assert len(flipnslide.tiles.shape) == 4
     
+    # Test that the correct tile shape was created
+    assert flipnslide.tiles.shape[-1] == flipnslide.tiles.shape[-2] == tile_size
+    
     # Test that the right amount of tiles were created
-    assert tiles.shape[0] == 2890
+    assert flipnslide.tiles.shape[0] == 2890
     
 
 def test_tiling(sample_image):
-    tile_size = 256
 
-    # Test no_slide_tile method
-    tiles_no_slide = Tiling.no_slide_tile(sample_image, tile_size)
-    assert isinstance(tiles_no_slide, np.ndarray)
-    # need to figure out this number
-    # assert tiles.shape[0] == ?
+    # Test no_overlap method
+    no_overlap = Tiling(tile_size=tile_size,
+                        tile_style='no_overlap',
+                        data_type='array', 
+                        image=sample_image)
+    
+    # Test that a numpy array is returned and that it is the correct dims
+    assert isinstance(no_overlap.tiles, np.ndarray)
+    assert len(no_overlap.tiles.shape) == 4
+    
+    # Test that the correct tile shape was created
+    assert no_overlap.tiles.shape[-1] == no_overlap.tiles.shape[-2] == tile_size
+    
+    # Test that the right amount of tiles were created
+    assert no_overlap.tiles.shape[0] == 400
 
-    # Test sliding_tile method
-    tiles_sliding = Tiling.sliding_tile(sample_image, tile_size)
-    assert isinstance(tiles_sliding, np.ndarray)
-    # need to figure out this number
-    # assert tiles.shape[0] == ?
-
-    # Test sliding_transforms method
-    tiles_flipnslide = Tiling.sliding_transforms(sample_image, tile_size)
-    assert isinstance(tiles_flipnslide, np.ndarray)
-    # need to figure out this number
-    # assert tiles.shape[0] == ?
-
+    # Test overlap method
+    overlap = Tiling(tile_size=tile_size,
+                     tile_style='overlap',
+                     data_type='array', 
+                     image=sample_image)
+    
+    # Test that a numpy array is returned and that it is the correct dims
+    assert isinstance(no_overlap.tiles, np.ndarray)
+    assert len(overlap.tiles.shape) == 4
+    
+    # Test that the correct tile shape was created
+    assert overlap.tiles.shape[-1] == overlap.tiles.shape[-2] == tile_size
+    
+    # Test that the right amount of tiles were created
+    assert overlap.tiles.shape[0] == 1521
+    
+    
+def test_crop():
+    
+    # Initialize sample image of incorrect size
+    sample_image = np.random.rand(3, 1000, 1023)
+    
+    #Test that the crop function works
+    tiling_init = Tiling(image=sample_image)
+    cropped_image = tiling_init.crop(image, tile_size=tile_size)
+    
+    # Test that the image is cropped
+    assert cropped_image.shape[-1] < sample_image.shape[-1]
+    assert cropped_image.shape[-2] < sample_image.shape[-2]
+    
+    # Test that the image is square
+    assert cropped_image.shape[-1] == sample_image.shape[-2]
+    
+    # Test that the image is cropped to a size that fits the tile_size
+    assert shape[-1] % tile_size == 0
+    
+    
 
 if __name__ == '__main__':
     pytest.main()
