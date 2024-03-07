@@ -36,7 +36,14 @@ def test_preprocess():
     assert len(preprocessed_image.shape) == len(downloaded_image.shape)
     
     # Test that preprocessing removed nans
-    assert not np.isnan(preprocessed_image).any(), "Array contains NaN values"    
+    assert not np.isnan(preprocessed_image).any(), "Array contains NaN values"
+    
+    # Test that the preprocessed array is centered on zero
+    mean = np.mean(preprocessed_image)
+    tolerance = 1e-2
+
+    # Check if the mean is close to zero
+    assert abs(mean) < tolerance, f"Mean ({mean}) is not close to zero within tolerance {tolerance}"
 
 
 if __name__ == '__main__':
