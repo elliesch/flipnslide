@@ -9,12 +9,20 @@ from torch.utils.data import Dataset, DataLoader
 
 class TiledDataset:
     
+    # def __init__(self, tiles,
+    #              permute_idx,
+    #              batch_size,
+    #              set_type:str='full',
+    #              split:float=0.1,
+    #              randomize_permute:bool=False,
+    #              state:int=18,
+    #              **kwargs):
+    
     def __init__(self, tiles,
-                 permute_idx,
                  batch_size,
                  set_type:str='full',
                  split:float=0.1,
-                 randomize_permute:bool=False,
+                 # randomize_permute:bool=False,
                  state:int=18,
                  **kwargs):
         '''
@@ -22,14 +30,13 @@ class TiledDataset:
 
         Parameters:
         - tiles (list): A list containing the dataset tiles.
-        - permute_idx (int): Index for permutation.
         - set_type (str): Type of dataset. Default is 'full'.
         - split (float): Percentage of data to use for testing. Default is 0.1.
-        - randomize_permute (bool): Whether to randomize on permutation index. Default is False.
         - state (int): Random state for reproducibility. Default is 18.
         - batch_size: Size of batches to use in data loading.
 
         **kwargs: Additional keyword arguments.
+        - permute_split (list): list of permutation number indices.
 
         Raises:
         - AssertionError: If randomize_permute is True.
@@ -46,8 +53,11 @@ class TiledDataset:
             
         
         #First split the data
-        train_tiles, test_tiles = train_test(tiles, permute_idx,
-                                             split, randomize_permute, state)
+        if 'permute_split' in kwargs:
+            train_tiles, test_tiles = self.train_test(tiles, split, state, **kwargs)
+        
+        else:
+            train_tiles, test_tiles = self.train_test(tiles, split, state)
         
         #Next add data to PyTorch Datasets
         self.train_dataset = TileDataset(train_tiles)
@@ -57,17 +67,20 @@ class TiledDataset:
         self.dataloader = DataLoader(self.train_dataset, batch_size=batch_size)              
         
         
-    def train_test(self, tiles, permute_idx, 
-                   split, randomize_permute, state):
+    def train_test(self, tiles, 
+                   split, state,
+                   randomize_permute=False,
+                   **kwargs):
         '''
         Split data into training and testing sets.
 
         Parameters:
         - tiles (list): A list containing the dataset tiles.
-        - permute_idx (list or array-like): Index referring to unique permutation number of each tile.
         - split (float): Percentage of data to use for testing.
-        - randomize_permute (bool): Whether to randomize on permutation index.
         - state (int): Random state for reproducibility.
+        
+        **kwargs: Additional keyword arguments.
+        - permute_split (list): list of permutation number indices.
 
         Returns:
         - train_arrays (list): List of arrays containing training data.
@@ -83,7 +96,11 @@ class TiledDataset:
         test_arrays = []
 
         if randomize_permute == True:
+            permute_idx = kwargs['permute_split']
             permutation = len(np.unique(permute_idx))
+            
+            train_data_arrays = []
+            train_test_arrays = []
 
             for ii in range(permutation):
                 perm_mask = permute_idx == ii
@@ -92,6 +109,8 @@ class TiledDataset:
                                                    shuffle=True)
                 train_data_arrays.append(X_train)
                 test_data_arrays.append(X_test)
+                
+                return train_data_arrays, train_test_arrays
 
         else:
             X_train, X_test = train_test_split(tiles, test_size=split, 
@@ -101,7 +120,7 @@ class TiledDataset:
             test_arrays = X_test
 
 
-        return train_arrays, test_arrays
+            return train_arrays, test_arrays
     
 
     
