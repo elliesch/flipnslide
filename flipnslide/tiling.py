@@ -76,9 +76,13 @@ class FlipnSlide:
         
         self.tile_size = tile_size
         
-        self.tiles = Tiling(tile_size=tile_size, tile_style='flipnslide',
-                            data_type=data_type, save=save, 
-                            viz=viz, verbose=verbose, **kwargs).tiles
+        init_tiling = Tiling(tile_size=tile_size, tile_style='flipnslide',
+                             data_type=data_type, save=save, 
+                             viz=viz, verbose=verbose, **kwargs)
+        
+        self.tiles = init_tiling.tiles
+        
+        self.permute_idx = init_tiling.permute_idx
 
 
 class Tiling:
@@ -217,7 +221,7 @@ class Tiling:
                 print(f'Image is being tiled using the {tile_style} approach...')
         
         if tile_style == 'flipnslide':            
-            self.tiles = self.sliding_transforms(image, self.tile_size)
+            self.tiles, self.permute_idx = self.sliding_transforms(image, self.tile_size)
         elif tile_style == 'overlap':
             self.tiles = self.sliding_tile(image, self.tile_size)
         else:
@@ -494,4 +498,4 @@ class Tiling:
         ## Combine all the tiles
         all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
 
-        return all_image_tiles
+        return all_image_tiles, idx_tiles
