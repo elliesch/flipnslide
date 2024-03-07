@@ -76,7 +76,7 @@ class FlipnSlide:
         
         self.tile_size = tile_size
         
-        self.tiles = Tiling(tile_size, , tile_style='flipnslide',
+        self.tiles = Tiling(tile_size, tile_style='flipnslide',
                             data_type, save, viz, verbose, **kwargs).tiles
 
 
