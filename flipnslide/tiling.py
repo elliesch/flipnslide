@@ -223,7 +223,7 @@ class Tiling:
         else:
             self.tiles = no_slide_tile(image, self.tile_size)
             
-        if viz == True or verbose=True:
+        if viz == True or verbose==True:
             tile_viz(self.tiles)
         
         # Optional Move to tensor
