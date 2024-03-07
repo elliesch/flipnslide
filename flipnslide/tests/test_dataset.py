@@ -13,7 +13,7 @@ batch_size = 10
 def test_TiledDataset():
     
     # Test if TiledDataset initializes properly
-    dataset = TiledDataset(tiles, permute_idx, batch_size=batch_size)
+    dataset = TiledDataset(tiles, batch_size=batch_size)
     
     # Test that the dataset exists for both training and testing
     assert len(dataset.train_dataset) > 0
