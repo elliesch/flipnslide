@@ -85,7 +85,7 @@ def test_crop():
     assert cropped_image.shape[-2] < sample_image.shape[-2]
     
     # Test that the image is square
-    assert cropped_image.shape[-1] == sample_image.shape[-2]
+    assert cropped_image.shape[-1] == cropped_image.shape[-2]
     
     # Test that the image is cropped to a size that fits the tile_size
     assert cropped_image.shape[-1] % tile_size == 0
