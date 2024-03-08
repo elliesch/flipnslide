@@ -109,7 +109,7 @@ class TiledDataset:
                 train_data_arrays.append(X_train)
                 test_data_arrays.append(X_test)
                 
-                return train_data_arrays, train_test_arrays
+                return train_data_arrays, test_data_arrays
 
         else:
             X_train, X_test = train_test_split(tiles, test_size=split, 
