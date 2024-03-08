@@ -19,7 +19,7 @@ Check back next week for instructions on installing this from PyPI and Conda For
 
 If you make use of this code, please cite the ICLR paper:
 
-    @inproceedings{DBLP:conf/iclr/HuangLCQFTL23,
+    @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
                       Tasha Snow and
                       Matthew R. Siegfried and
