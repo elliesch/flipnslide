@@ -41,4 +41,4 @@ the [LICENSE](https://github.com/elliesch/flipnslide/blob/main/LICENSE) file.
 
 ## Contributors
 
-See the upcoming AUTHORS file for a complete list of contributors to the project.
+See the [AUTHORS](https://github.com/elliesch/flipnslide/blob/main/AUTHORS) file for a complete list of contributors to the project.
