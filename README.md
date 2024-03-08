@@ -25,8 +25,8 @@ If you make use of this code, please cite the ICLR paper:
                       Matthew R. Siegfried and
                       Fernando Pérez},
       title        = {A Concise Tiling Strategy for Preserving Spatial Context in Earth Observation Imagery},
-      booktitle    = {The Twelfth International Conference on Learning Representations,
-                  {ICLR} 2024, Vienna, Austria, May 7-11, 2024},
+      booktitle    = {Machine Learning for Remote Sensing Workshop {ML4RS} at The Twelfth International Conference 
+                      on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024},
       publisher    = {OpenReview.net},
       year         = {2024},
       url          = {upcoming},
