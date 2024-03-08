@@ -91,7 +91,7 @@ def test_crop():
     assert cropped_image.shape[-1] % tile_size == 0
     
     
-def test_torch():
+def test_torch(sample_image):
     
     # Initialize tiles
     no_overlap = Tiling(tile_size=tile_size,
