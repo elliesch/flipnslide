@@ -78,7 +78,7 @@ def test_crop():
     
     #Test that the crop function works
     tiling_init = Tiling(image=sample_image)
-    cropped_image = tiling_init.crop(image, tile_size=tile_size)
+    cropped_image = tiling_init.crop(sample_image, tile_size=tile_size)
     
     # Test that the image is cropped
     assert cropped_image.shape[-1] < sample_image.shape[-1]
@@ -88,7 +88,7 @@ def test_crop():
     assert cropped_image.shape[-1] == sample_image.shape[-2]
     
     # Test that the image is cropped to a size that fits the tile_size
-    assert shape[-1] % tile_size == 0
+    assert cropped_image.shape[-1] % tile_size == 0
     
     
 def test_torch():
