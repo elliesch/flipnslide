@@ -45,14 +45,13 @@ links to installation, easy_example, advanced_example, and contribute go here on
 Contributors
 ============
 
-.. include:: ../AUTHORS.md
+Please see [https://github.com/elliesch/flipnslide/blob/main/AUTHORS.md](../AUTHORS.md)
 
 
 Citation and Attribution
 ========================
 
-If you make use of this code, please cite the `JOSS <http://joss.theoj.org>`_
-paper:
+If you make use of this algorithm, please cite the ICLR 2024 paper:
 
     @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
