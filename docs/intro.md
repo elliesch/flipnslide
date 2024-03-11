@@ -1,4 +1,4 @@
-#`flipnslide`
+# `flipnslide`
 
 
 Flip-n-Slide is a concise tiling and augmentation strategy to prepare large 
