@@ -32,9 +32,9 @@ a link to your project on the [Projects page]()!
 
 This package is being actively developed in 
 [a public repository on GitHub](https://github.com/elliesch/flipnslide), 
-and we are always looking for new contributors. No contribution is too small, 
-so if you have any trouble with this code, questions about its use, find a typo, 
-or have requests for new content (examples or features), please 
+and we welcome new contributions. No contribution is too small, so if you encounter any
+difficulties with this code, have questions about its use, find a typo, or have 
+requests for new content (examples or features), please 
 [open an issue on GitHub](https://github.com/elliesch/flipnslide/issues).
 
 
