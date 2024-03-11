@@ -1,6 +1,5 @@
-****
-`flipnslide`
-****
+#`flipnslide`
+
 
 Flip-n-Slide is a concise tiling and augmentation strategy to prepare large 
 scientific images for use with GPU-enabled algorithms. The Flip-n-Slide
@@ -41,14 +40,12 @@ requests for new content (examples or features), please
 links to installation, easy_example, advanced_example, and contribute go here once those files exist in the jupyter book
 
 
-Contributors
-============
+## Contributors
 
 Please see [the authors list](https://github.com/elliesch/flipnslide/blob/main/AUTHORS.md).
 
 
-Citation and Attribution
-========================
+## Citation and Attribution
 
 If you make use of this algorithm, please cite the ICLR 2024 paper:
 

@@ -1,6 +1,5 @@
 ************
 How to Install
-************
 
 Install with `pip` (recommended)
 ================================
