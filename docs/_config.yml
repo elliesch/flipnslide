@@ -1,0 +1,16 @@
+# In _config.yml
+title: Flip-n-Slide
+author: Ellianna Abrahams
+# logo: logo.png
+execute:
+  execute_notebooks: force
+
+# Add the code source repository
+repository:
+  url: https://github.com/elliesch/flipnslide
+html:
+  use_repository_button: true
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
