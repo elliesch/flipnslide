@@ -21,3 +21,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/elliesch/flipnslide"
 Issues = "https://github.com/elliesch/flipnslide/issues"
+
+[tool.pytest]
+testpaths = ["flipnslide"]
