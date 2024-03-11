@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flipnslide"
+version = "0.0.0"
+authors = [
+  { name="Ellianna Abrahams", email="ellianna@berkeley.edu" },
+]
+description = "A concise Python package to preprocess large scientific images for use with GPUs."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Computer Vision"
+]
+
+[project.urls]
+Homepage = "https://github.com/elliesch/flipnslide"
+Issues = "https://github.com/elliesch/flipnslide/issues"
