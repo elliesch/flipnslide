@@ -1,5 +1,3 @@
-.. include:: references.bib
-
 ****
 `flipnslide`
 ****
@@ -18,11 +16,12 @@ convolutional processing downstream.
 `flipnslide` is a Python package that outputs deep learning-ready preprocessed 
 tiled datasets that follow the Flip-n-Slide strategy from a single large 
 scientific image. The package is flexible, providing tiled outputs as `numpy` 
-arrays, `PyTorch` tensors, or `Tensorflow` tensors depending on user preference,
-allowing it to be efficiently slotted into existing machine learning pipelines. 
-`flipnslide` allows the user to select preferred tile size and save modes, and
-it can be implemented on existing data or used to download and tile any Earth 
-Observation datasets from Planetary Computer (Microsoft Open Source 2022).
+arrays (Harris 2020), `PyTorch` tensors (Paszke 2019), or `Tensorflow` tensors 
+(Abadi 2015) depending on user preference,allowing it to be efficiently slotted into 
+existing machine learning pipelines. `flipnslide` allows the user to select preferred 
+tile size and save modes, and it can be implemented on existing data or used to 
+download and tile any Earth Observation datasets from Planetary Computer 
+(Microsoft Open Source 2022).
 
 
 `flipnslide` was developed for use with the large satellite images that are used 
@@ -45,7 +44,7 @@ links to installation, easy_example, advanced_example, and contribute go here on
 Contributors
 ============
 
-Please see [https://github.com/elliesch/flipnslide/blob/main/AUTHORS.md](../AUTHORS.md)
+Please see [the authors list](https://github.com/elliesch/flipnslide/blob/main/AUTHORS.md).
 
 
 Citation and Attribution
