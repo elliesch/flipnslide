@@ -22,7 +22,7 @@ def test_imageingest():
     assert isinstance(image_ingest.image, np.ndarray)
     
     # Test that the image has the expected number of dims
-    assert len(image_ingest.image.shape)
+    assert len(image_ingest.image.shape) == 3
     
 
 if __name__ == '__main__':

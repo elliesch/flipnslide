@@ -18,6 +18,7 @@ def test_download_image():
     
     # Test that the image has the expected number of dims
     assert len(downloaded_image.shape) == 3
+
     
 def test_preprocess():
     
