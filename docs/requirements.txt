@@ -16,7 +16,6 @@ torchvision
 tensorflow
 planetary-computer
 rasterio
-GDAL
 natsort
 stackstac
 jupyter-book
