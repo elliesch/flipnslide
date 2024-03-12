@@ -15,6 +15,7 @@ dependencies:
   - rioxarray
   - geopandas
   - ipykernel
+  - jupyter-book
   - pip
   - pip:
     - torch
