@@ -1,16 +1,13 @@
-************
-How to Install
+# How to Install
 
-Install with `pip` (recommended)
-================================
+## Install with `pip` (recommended)
 
-To install the latest stable version from [PyPI]() using `pip`, run:
+To install the latest stable version from [PyPI](https://pypi.org/project/flipnslide/) using `pip`, run:
 
-    python -m pip install flipnslide ## THIS DOESN'T WORK YET
+    pip install flipnslide
 
 
-Install with `conda`
-====================
+## Install with `conda`
 
 To install the latest stable version available through `conda`
 on the `conda-forge`channel, run:
@@ -18,8 +15,7 @@ on the `conda-forge`channel, run:
     conda install -c conda-forge flipnslide ## THIS DOESN'T WORK YET
 
 
-Install Development Version from Source
-========================================
+## Install Development Version from Source
 
 To install the latest development version of `flipnslide`, clone the 
 repository from [GitHub](https://github.com/elliesch/flipnslide) by running:
