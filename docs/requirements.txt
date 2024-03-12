@@ -1,9 +1,6 @@
 numpy
 torch
 flipnslide
-<<<<<<< Updated upstream
-jupyter-book
-=======
 pandas
 numpy
 matplotlib
@@ -23,4 +20,3 @@ GDAL
 natsort
 stackstac
 jupyter-book
->>>>>>> Stashed changes
