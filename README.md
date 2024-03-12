@@ -8,12 +8,12 @@ The documentation for `flipnside` is under construction, and will be hosted on [
 
 ## Installation and Dependencies
 
-For now, `flipnside` can be implemented locally by cloning this repository.
+For now, `flipnslide` can be installed from PyPI using pip, by running:
 
 ```bash
-git clone https://github.com/elliesch/flipnslide.git
+pip install flipnslide
 ```
-Check back next week for instructions on installing this from PyPI and Conda Forge.
+Check back later this week for instructions on installing from conda forge.
 
 ## Attribution
 
