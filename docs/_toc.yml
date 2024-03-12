@@ -2,6 +2,6 @@
 format: jb-book
 root: intro
 chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+- file: installation
+- file: getting_started
+- file: contribute
