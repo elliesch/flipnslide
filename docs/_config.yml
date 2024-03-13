@@ -13,4 +13,9 @@ html:
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
-  - references.bib
+  - ../paper/paper.bib
+
+# Configure the citation style
+sphinx:
+  config:
+    bibtex_reference_style: author_year
