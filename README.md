@@ -4,7 +4,7 @@ Flip-n-Slide is a concise tiling and augmentation strategy to prepare large scie
 
 ## Documentation
 
-The documentation for `flipnside` is under construction, and will be hosted on [Read the Docs](https://readthedocs.org/projects/flipnslide/).
+The documentation for `flipnside` is available on [Read the Docs](https://flipnslide.readthedocs.io/).
 
 ## Installation and Dependencies
 
