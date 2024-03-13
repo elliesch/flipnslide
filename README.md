@@ -17,7 +17,7 @@ Check back later this week for instructions on installing from conda forge.
 
 ## Attribution
 
-If you make use of this code, please cite the ICLR paper:
+If you make use of this code, please cite the companion ML4RS @ ICLR paper:
 
     @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
