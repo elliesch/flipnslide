@@ -2,6 +2,7 @@
 
 import numpy as np
 import torch
+import tensorflow as tf
 from .ingest import ImageIngest
 from .util import saver
 from .viz import ingest_viz, crop_viz, tile_viz
@@ -231,11 +232,20 @@ class Tiling:
             tile_viz(self.tiles)
         
         # Optional Move to tensor
+        if data_type not in ['array', 'tensor', 'tensor_tf']:
+            raise ValueError("Invalid output type. Allowed values are 'array' for a numpy array, 'tensor' for a PyTorch tensor, or 'tensor_tf' for a tensorflow tensor.")
+        
         if data_type == 'tensor':
             if verbose == True:
                 print('Tiles are being converted to PyTorch tensor...')
             
             self.tiles = torch.from_numpy(self.tiles)
+
+        elif data_type == 'tensor_tf':
+            if verbose == True:
+                print('Tiles are being converted to Tensorflow tensor...')
+
+            self.tiles = tf.convert_to_tensor(self.tiles)
             
         # Save the data
         if save == True:
