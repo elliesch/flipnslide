@@ -3,7 +3,7 @@
 
 Flip-n-Slide is a concise tiling and augmentation strategy to prepare large 
 scientific images for use with GPU-enabled algorithms. The Flip-n-Slide
-approach (Abrahams et al. 2024) preserves multiple views of local semantic context
+approach [@abrahams_2024] preserves multiple views of local semantic context
 within a large image by creating multiple nodded tile overlaps for a given 
 pixel position within the original large image. To eliminate the redundancies
 within the dataset that are created by simply overlapping tiles, Flip-n-Slide
@@ -15,12 +15,12 @@ convolutional processing downstream.
 `flipnslide` is a Python package that outputs deep learning-ready preprocessed 
 tiled datasets that follow the Flip-n-Slide strategy from a single large 
 scientific image. The package is flexible, providing tiled outputs as `numpy` 
-arrays (Harris 2020), `PyTorch` tensors (Paszke 2019), or `Tensorflow` tensors 
-(Abadi 2015) depending on user preference,allowing it to be efficiently slotted into 
+arrays [@harris_2020], `PyTorch` tensors [@paszke_2019], or `Tensorflow` tensors 
+[@abadi 2015] depending on user preference,allowing it to be efficiently slotted into 
 existing machine learning pipelines. `flipnslide` allows the user to select preferred 
 tile size and save modes, and it can be implemented on existing data or used to 
 download and tile any Earth Observation datasets from Planetary Computer 
-(Microsoft Open Source 2022).
+[@microsoftopensource_2022].
 
 
 `flipnslide` was developed for use with the large satellite images that are used 
