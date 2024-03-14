@@ -47,7 +47,7 @@ Please see [the authors list](https://github.com/elliesch/flipnslide/blob/main/A
 
 ## Citation and Attribution
 
-If you make use of this algorithm, please cite the ICLR 2024 paper:
+If you make use of this algorithm, please cite the companion ML4RS @ ICLR 2024 paper:
 
     @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
