@@ -53,7 +53,7 @@ In a companion paper submitted to the Machine Learning for Remote Sensing (ML4RS
 | 50% Overlap <br> [@unel_2019, @zeng_2019, @reina_2020, @akyon_2022] |            | &#x2713;   | &#x2713;   | &#x2713;   |            |
 | Tile Stitching <br> [@charette_2021] |            | &#x2713;   |            |            | &#x2713;   |
 | Dynamic Tiling <br> [@nguyen_2023] | &#x2713;   |            |            |            | &#x2713;   |
-| Flip-n-Slide <br> [@abrahams_2024] |            | &#x2713;   | &#x2713;   | &#x2713;   | &#x2713;   |
+| **Flip-n-Slide** <br> [@abrahams_2024] |            | &#x2713;   | &#x2713;   | &#x2713;   | &#x2713;   |
 
 <a name="tab1"></a> *Table 1*: Comparison of other recent input tiling methods with the one presented in this paper. The column abbreviations are explained here: **DTS**, dynamic tile size. **NPN**, no pre-training necessary to determine tile size. **IDS**, increases data samples for training. **FCV**, full spatio-contextual view preserved. **NDR**, no data redundancies in overlapping tiles.
 
