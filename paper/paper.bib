@@ -22,7 +22,6 @@
   publisher = {{Springer International Publishing}},
   address = {{Cham}},
   doi = {10.1007/978-3-319-24574-4_28},
-  abstract = {There is large consent that successful training of deep networks requires many thousand annotated training samples. In this paper, we present a network and training strategy that relies on the strong use of data augmentation to use the available annotated samples more efficiently. The architecture consists of a contracting path to capture context and a symmetric expanding path that enables precise localization. We show that such a network can be trained end-to-end from very few images and outperforms the prior best method (a sliding-window convolutional network) on the ISBI challenge for segmentation of neuronal structures in electron microscopic stacks. Using the same network trained on transmitted light microscopy images (phase contrast and DIC) we won the ISBI cell tracking challenge 2015 in these categories by a large margin. Moreover, the network is fast. Segmentation of a 512x512 image takes less than a second on a recent GPU. The full implementation (based on Caffe) and the trained networks are available at http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net.},
   isbn = {978-3-319-24574-4},
   langid = {english},
   keywords = {Convolutional Layer,Data Augmentation,Deep Network,Ground Truth Segmentation,Training Image}
@@ -38,7 +37,6 @@
   issn = {1063-6919},
   doi = {10.1109/CVPR.2017.660},
   urldate = {2023-11-13},
-  abstract = {Scene parsing is challenging for unrestricted open vocabulary and diverse scenes. In this paper, we exploit the capability of global context information by different-region-based context aggregation through our pyramid pooling module together with the proposed pyramid scene parsing network (PSPNet). Our global prior representation is effective to produce good quality results on the scene parsing task, while PSPNet provides a superior framework for pixel-level prediction. The proposed approach achieves state-of-the-art performance on various datasets. It came first in ImageNet scene parsing challenge 2016, PASCAL VOC 2012 benchmark and Cityscapes benchmark. A single PSPNet yields the new record of mIoU accuracy 85.4\% on PASCAL VOC 2012 and accuracy 80.2\% on Cityscapes.}
 }
 
 @article{chen_2018,
@@ -54,7 +52,6 @@
   issn = {1939-3539},
   doi = {10.1109/TPAMI.2017.2699184},
   urldate = {2023-11-13},
-  abstract = {In this work we address the task of semantic image segmentation with Deep Learning and make three main contributions that are experimentally shown to have substantial practical merit. First, we highlight convolution with upsampled filters, or `atrous convolution', as a powerful tool in dense prediction tasks. Atrous convolution allows us to explicitly control the resolution at which feature responses are computed within Deep Convolutional Neural Networks. It also allows us to effectively enlarge the field of view of filters to incorporate larger context without increasing the number of parameters or the amount of computation. Second, we propose atrous spatial pyramid pooling (ASPP) to robustly segment objects at multiple scales. ASPP probes an incoming convolutional feature layer with filters at multiple sampling rates and effective fields-of-views, thus capturing objects as well as image context at multiple scales. Third, we improve the localization of object boundaries by combining methods from DCNNs and probabilistic graphical models. The commonly deployed combination of max-pooling and downsampling in DCNNs achieves invariance but has a toll on localization accuracy. We overcome this by combining the responses at the final DCNN layer with a fully connected Conditional Random Field (CRF), which is shown both qualitatively and quantitatively to improve localization performance. Our proposed ``DeepLab'' system sets the new state-of-art at the PASCAL VOC-2012 semantic image segmentation task, reaching 79.7 percent mIOU in the test set, and advances the results on three other datasets: PASCAL-Context, PASCAL-Person-Part, and Cityscapes. All of our code is made publicly available online.}
 }
 
 @inproceedings{chen_2019,
@@ -68,7 +65,6 @@
   issn = {2380-7504},
   doi = {10.1109/ICCV.2019.00215},
   urldate = {2023-11-13},
-  abstract = {Sliding-window object detectors that generate bounding-box object predictions over a dense, regular grid have advanced rapidly and proven popular. In contrast, modern instance segmentation approaches are dominated by methods that first detect object bounding boxes, and then crop and segment these regions, as popularized by Mask R-CNN. In this work, we investigate the paradigm of dense sliding-window instance segmentation, which is surprisingly under-explored. Our core observation is that this task is fundamentally different than other dense prediction tasks such as semantic segmentation or bounding-box object detection, as the output at every spatial location is itself a geometric structure with its own spatial dimensions. To formalize this, we treat dense instance segmentation as a prediction task over 4D tensors and present a general framework called TensorMask that explicitly captures this geometry and enables novel operators on 4D tensors. We demonstrate that the tensor view leads to large gains over baselines that ignore this structure, and leads to results comparable to Mask R-CNN. These promising results suggest that TensorMask can serve as a foundation for novel advances in dense mask prediction and a more complete understanding of the task. Code will be made available.}
 }
 
 @inproceedings{tan_2020,
@@ -82,7 +78,6 @@
   issn = {2575-7075},
   doi = {10.1109/CVPR42600.2020.01079},
   urldate = {2023-11-13},
-  abstract = {Model efficiency has become increasingly important in computer vision. In this paper, we systematically study neural network architecture design choices for object detection and propose several key optimizations to improve efficiency. First, we propose a weighted bi-directional feature pyramid network (BiFPN), which allows easy and fast multi-scale feature fusion; Second, we propose a compound scaling method that uniformly scales the resolution, depth, and width for all backbone, feature network, and box/class prediction networks at the same time. Based on these optimizations and EfficientNet backbones, we have developed a new family of object detectors, called EfficientDet, which consistently achieve much better efficiency than prior art across a wide spectrum of resource constraints. In particular, with single-model and single-scale, our EfficientDet-D7 achieves state-of-the-art 52.2 AP on COCO test-dev with 52M parameters and 325B FLOPs1, being 4x - 9x smaller and using 13x - 42x fewer FLOPs than previous detector. Code is available at https://github.com/google/ automl/tree/master/efficientdet.}
 }
 
 @article{amara_2022,
@@ -96,7 +91,6 @@
   pages = {11--23},
   issn = {0097-8493},
   doi = {10.1016/j.cag.2022.03.003},
-  abstract = {With the Coronavirus disease 2019 (COVID-19) spread, causing a world pandemic, and recently, the virus new variants continue to appear, making the situation more challenging and threatening, the visual assessment and quantification by expert radiologists have become costly and error-prone. Hence, there is a need to propose a model to predict the COVID-19 cases at the earliest possible to control the disease spread. In order to assist the medical professionals and reduce workload and the time the COVID-19 diagnosis cycle takes, this paper proposes a novel neural network architecture termed as O-Net to automatically segment chest Computerised Tomography Ct-scans infected by COVID-19 with optimised computing power and memory occupation. The O-Net consists of two convolutional autoencoders with an upsampling channel and a downsampling channel. Experimental tests show our proposal's effectiveness and potential, with a dice score of 0.86, pixel accuracy, precision, specificity of 0.99, 0.99, 0.98, respectively. Performance on the external dataset illustrates generalisation and scalability capabilities of the O-Net model to Ct-scan obtained from different scanners with different sizes. The second objective of this work is to introduce our virtual reality platform, COVIR, that visualises and manipulates 3D reconstructed lungs and segmented infected lesions caused by COVID-19. COVIR platform acts as a reading and visualisation support for medical practitioners to diagnose COVID-19 lung infection. The COVIR platform could be used for medical education professional practice and training. It was tested by Thirteen participants (medical staff, researchers, and collaborators), they conclude that the 3D VR visualisation of segmented Ct-Scan provides an aid diagnosis tool for better interpretation.},
   langid = {english},
   pmcid = {PMC8923016},
   pmid = {35310449},
@@ -113,7 +107,6 @@
   pages = {259--264},
   doi = {10.1109/ICMLA.2011.38},
   urldate = {2023-11-13},
-  abstract = {The topic of deep-learning has recently received considerable attention in the machine learning research community, having great potential to liberate computer scientists from hand-engineering training datasets, because the method can learn the desired features automatically. This is particularly beneficial in medical research applications of machine learning, where getting good hand labelling of data is especially expensive. We propose application of a single-layer sparse-auto encoder to dynamic contrast-enhanced magnetic resonance imaging (DCE-MRI) for fully automatic classification of tissue types in a large unlabelled dataset with minimal human interference \textendash{} in a manner similar to data-mining. DCE-MRI analysis, looking at the change of the MR contrast-agent concentration over successively acquired images, is time-series analysis. We analyse the change of brightness (which is related to the contrast-agent concentration) of the DCE-MRI images over time to classify different tissue types in the images. Therefore our system is an application of an auto encoder to time-series analysis while the demonstrated result and further possible successive application areas are in computer vision. We discuss the important factors affecting performance of the system in applying the auto encoder to the time-series analysis of DCE-MRI medical image data.}
 }
 
 @inproceedings{guo_2019,
@@ -126,7 +119,6 @@
   issn = {2473-9944},
   doi = {10.1109/ICCVW.2019.00377},
   urldate = {2023-11-13},
-  abstract = {Many Large-scale image databases such as ImageNet have significantly advanced image classification and other visual recognition tasks. However much of these datasets are constructed only for single-label and coarse object-level classification. For real-world applications, multiple labels and fine-grained categories are often needed, yet very few such datasets exist publicly, especially those of large-scale and high quality. In this work, we contribute to the community a new dataset called iMaterialist Fashion Attribute (iFashion-Attribute) to address this problem in the fashion domain. The dataset is constructed from over one million fashion images with a label space that includes 8 groups of 228 fine-grained attributes in total. Each image is annotated by experts with multiple, high-quality fashion attributes. The result is the first known million-scale multi-label and fine-grained image dataset. We conduct extensive experiments and provide baseline results with modern deep Convolutional Neural Networks (CNNs). Additionally, we demonstrate models pre-trained on iFashion-Attribute achieve superior transfer learning performance on fashion related tasks compared with pre-training from ImageNet or other fashion datasets.}
 }
 
 @inproceedings{yang_2018,
@@ -139,7 +131,6 @@
   issn = {1051-4651},
   doi = {10.1109/ICPR.2018.8546189},
   urldate = {2023-11-13},
-  abstract = {Convolutional Neural Networks (CNN) have been successfully applied to autonomous driving tasks, many in an end-to-end manner. Previous end-to-end steering control methods take an image or an image sequence as the input and directly predict the steering angle with CNN. Although single task learning on steering angles has reported good performances, the steering angle alone is not sufficient for vehicle control. In this work, we propose a multi-task learning framework to predict the steering angle and speed control simultaneously in an end-to-end manner. Since it is nontrivial to predict accurate speed values with only visual inputs, we first propose a network to predict discrete speed commands and steering angles with image sequences. Moreover, we propose a multi-modal multi-task network to predict speed values and steering angles by taking previous feedback speeds and visual recordings as inputs. Experiments are conducted on the public Udacity dataset and a newly collected SAIC dataset. Results show that the proposed model predicts steering angles and speed values accurately. Furthermore, we improve the failure data synthesis methods to solve the problem of error accumulation in real road tests.}
 }
 
 @article{vandyk_2001,
@@ -168,7 +159,6 @@
   journal = {{arXiv}},
   doi = {10.48550/arXiv.1712.00409},
   urldate = {2023-11-13},
-  abstract = {Deep learning (DL) creates impactful advances following a virtuous recipe: model architecture search, creating large training data sets, and scaling computation. It is widely believed that growing training sets and models should improve accuracy and result in better products. As DL application domains grow, we would like a deeper understanding of the relationships between training set size, computational scale, and model accuracy improvements to advance the state-of-the-art. This paper presents a large scale empirical characterization of generalization error and model size growth as training sets grow. We introduce a methodology for this measurement and test four machine learning domains: machine translation, language modeling, image processing, and speech recognition. Our empirical results show power-law generalization error scaling across a breadth of factors, resulting in power-law exponents---the "steepness" of the learning curve---yet to be explained by theoretical work. Further, model improvements only shift the error but do not appear to affect the power-law exponent. We also show that model size scales sublinearly with data size. These scaling relationships have significant implications on deep learning research, practice, and systems. They can assist model debugging, setting accuracy targets, and decisions about data set growth. They can also guide computing system design and underscore the importance of continued computational scaling.},
   archiveprefix = {arxiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning}
 }
@@ -196,7 +186,6 @@
   issn = {2380-7504},
   doi = {10.1109/ICCV.2019.00612},
   urldate = {2023-11-13},
-  abstract = {Regional dropout strategies have been proposed to enhance performance of convolutional neural network classifiers. They have proved to be effective for guiding the model to attend on less discriminative parts of objects (e.g. leg as opposed to head of a person), thereby letting the network generalize better and have better object localization capabilities. On the other hand, current methods for regional dropout removes informative pixels on training images by overlaying a patch of either black pixels or random noise. Such removal is not desirable because it suffers from information loss causing inefficiency in training. We therefore propose the CutMix augmentation strategy: patches are cut and pasted among training images where the ground truth labels are also mixed proportionally to the area of the patches. By making efficient use of training pixels and retaining the regularization effect of regional dropout, CutMix consistently outperforms state-of-the-art augmentation strategies on CIFAR and ImageNet classification tasks, as well as on ImageNet weakly-supervised localization task. Moreover, unlike previous augmentation methods, our CutMix-trained ImageNet classifier, when used as a pretrained model, results in consistent performance gain in Pascal detection and MS-COCO image captioning benchmarks. We also show that CutMix can improve the model robustness against input corruptions and its out-of distribution detection performance.}
 }
 
 @inproceedings{hong_2021,
@@ -210,7 +199,6 @@
   issn = {2575-7075},
   doi = {10.1109/CVPR46437.2021.01462},
   urldate = {2023-11-13},
-  abstract = {In spite of the great success of deep neural networks for many challenging classification tasks, the learned networks are vulnerable to overfitting and adversarial attacks. Recently, mixup based augmentation methods have been actively studied as one practical remedy for these drawbacks. However, these approaches do not distinguish between the content and style features of the image, but mix or cut-and-paste the images. We propose StyleMix and StyleCutMix as the first mixup method that separately manipulates the content and style information of input image pairs. By carefully mixing up the content and style of images, we can create more abundant and robust samples, which eventually enhance the generalization of model training. We also develop an automatic scheme to decide the degree of style mixing according to the pair's class distance, to prevent messy mixed images from too differently styled pairs. Our experiments on CIFAR-10, CIFAR-100 and ImageNet datasets show that StyleMix achieves better or comparable performance to state of the art mixup methods and learns more robust classifiers to adversarial attacks.}
 }
 
 @article{baek_2021,
@@ -225,7 +213,6 @@
   issn = {0031-3203},
   doi = {10.1016/j.patcog.2020.107594},
   urldate = {2023-11-13},
-  abstract = {Recently developed regularization techniques improve the networks generalization by only considering the global context. Therefore, the network tends to focus on a few most discriminative subregions of an image for prediction accuracy, leading the network being sensitive to unseen or noisy data. To address this disadvantage, we introduce the concept of local context mapping by predicting patch-level labels and combine it with a method of local data augmentation by grid-based mixing, called GridMix. Through our analysis of intermediate representations, we show that our GridMix can effectively regularize the network model. Finally, our evaluation results indicate that GridMix outperforms state-of-the-art techniques in classification and adversarial robustness, and it achieves a comparable performance in weakly supervised object localization.},
   keywords = {Data augmentation,Deep learning,Network regularization}
 }
 
@@ -251,7 +238,6 @@
   year = {2019},
   month = sep,
   urldate = {2023-11-13},
-  abstract = {Modern deep neural networks can achieve high accuracy when the training distribution and test distribution are identically distributed, but this assumption is frequently violated in practice. When the train and test distributions are mismatched, accuracy can plummet. Currently there are few techniques that improve robustness to unforeseen data shifts encountered during deployment. In this work, we propose a technique to improve the robustness and uncertainty estimates of image classifiers. We propose AugMix, a data processing technique that is simple to implement, adds limited computational overhead, and helps models withstand unforeseen corruptions. AugMix significantly improves robustness and uncertainty measures on challenging image classification benchmarks, closing the gap between previous methods and the best possible performance in some cases by more than half.},
   langid = {english}
 }
 
@@ -266,7 +252,6 @@
   issn = {2575-7075},
   doi = {10.1109/CVPR46437.2021.01358},
   urldate = {2023-11-14},
-  abstract = {This paper presents a supervised mixing augmentation method termed SuperMix, which exploits the salient regions within input images to construct mixed training samples. SuperMix is designed to obtain mixed images rich in visual features and complying with realistic image priors. To enhance the efficiency of the algorithm, we develop a variant of the Newton iterative method, 65\texttimes{} faster than gradient descent on this problem. We validate the effectiveness of SuperMix through extensive evaluations and ablation studies on two tasks of object classification and knowledge distillation. On the classification task, SuperMix provides comparable performance to the advanced augmentation methods, such as AutoAugment and RandAugment. In particular, combining SuperMix with RandAugment achieves 78.2\% top-1 accuracy on ImageNet with ResNet50. On the distillation task, solely classifying images mixed using the teacher's knowledge achieves comparable performance to the state-of-the-art distillation methods. Furthermore, on average, incorporating mixed images into the distillation objective improves the performance by 3.4\% and 3.1\% on CIFAR-100 and ImageNet, respectively. The code is available at https://github.com/alldbi/SuperMix.}
 }
 
 @inproceedings{cubuk_2019,
@@ -280,7 +265,6 @@
   issn = {2575-7075},
   doi = {10.1109/CVPR.2019.00020},
   urldate = {2023-11-13},
-  abstract = {Data augmentation is an effective technique for improving the accuracy of modern image classifiers. However, current data augmentation implementations are manually designed. In this paper, we describe a simple procedure called AutoAugment to automatically search for improved data augmentation policies. In our implementation, we have designed a search space where a policy consists of many sub-policies, one of which is randomly chosen for each image in each mini-batch. A sub-policy consists of two operations, each operation being an image processing function such as translation, rotation, or shearing, and the probabilities and magnitudes with which the functions are applied. We use a search algorithm to find the best policy such that the neural network yields the highest validation accuracy on a target dataset. Our method achieves state-of-the-art accuracy on CIFAR-10, CIFAR-100, SVHN, and ImageNet (without additional data). On ImageNet, we attain a Top-1 accuracy of 83.5\% which is 0.4\% better than the previous record of 83.1\%. On CIFAR-10, we achieve an error rate of 1.5\%, which is 0.6\% better than the previous state-of-the-art. Augmentation policies we find are transferable between datasets. The policy learned on ImageNet transfers well to achieve significant improvements on other datasets, such as Oxford Flowers, Caltech-101, Oxford-IIT Pets, FGVC Aircraft, and Stanford Cars.}
 }
 
 @inproceedings{cubuk_2020,
@@ -304,7 +288,6 @@
   issn = {2575-7075},
   doi = {10.1109/CVPR46437.2021.00270},
   urldate = {2023-11-13},
-  abstract = {A common practice in unsupervised representation learning is to use labeled data to evaluate the quality of the learned representations. This supervised evaluation is then used to guide critical aspects of the training process such as selecting the data augmentation policy. However, guiding an unsupervised training process through supervised evaluations is not possible for real-world data that does not actually contain labels (which may be the case, for example, in privacy sensitive fields such as medical imaging). Therefore, in this work we show that evaluating the learned representations with a self-supervised image rotation task is highly correlated with a standard set of supervised evaluations (rank correlation {$>$} 0.94). We establish this correlation across hundreds of augmentation policies, training settings, and network architectures and provide an algorithm (SelfAugment) to automatically and efficiently select augmentation policies without using supervised evaluations. Despite not using any labeled data, the learned augmentation policies perform comparably with augmentation policies that were determined using exhaustive supervised evaluations.}
 }
 
 @inproceedings{li_2023,
@@ -318,7 +301,6 @@
   issn = {2160-7516},
   doi = {10.1109/CVPRW59228.2023.00221},
   urldate = {2023-11-13},
-  abstract = {Data augmentation is a promising way to enhance the generalization ability of deep learning models. Many proxy-free and proxy-based automated augmentation methods are proposed to search for the best augmentation for target datasets. However, the proxy-free methods require lots of searching overhead, while the proxy-based methods introduce optimization gaps with the actual task. In this paper, we explore a new proxy-free approach that only needs a small number of searches ( 5 vs 100 of RandAugment) to alleviate these issues. Specifically, we propose Adaptive Automated Augmentation (A2 -Aug), a simple and effective proxy-free framework, which seeks to mine the adaptive ensemble knowledge of multiple augmentations to further improve the adaptability of each candidate augmentation. Firstly, A2 -Aug automatically learns the ensemble logit from multiple candidate augmentations, which is jointly optimized and adaptive to target tasks. Secondly, the adaptive ensemble logit is used to distill each logit of input augmentation via KL divergence. In this way, these a few candidate augmentations can implicitly learn strong adaptability for the target datasets, which enjoy similar effects with many searches of RandAugment. Finally, equipped with joint training via separate BatchNorm and normalized distillation, A2-Aug obtains state-of-the-art performance with less training budget. In experiments, our A2 -Aug achieves 4\% performance gain on CIFAR-100, which substantially outperforms other methods. On ImageNet, we obtain a top-1 accuracy of 79.2\% for ResNet-50, a 1.6\% boosting over the AutoAugment with at least 25\texttimes{} faster training speed.}
 }
 
 @article{pinckaers_2018,
@@ -332,7 +314,6 @@
   journal = {{arXiv}},
   doi = {10.48550/arXiv.1804.05712},
   urldate = {2023-11-13},
-  abstract = {To train deep convolutional neural networks, the input data and the intermediate activations need to be kept in memory to calculate the gradient descent step. Given the limited memory available in the current generation accelerator cards, this limits the maximum dimensions of the input data. We demonstrate a method to train convolutional neural networks holding only parts of the image in memory while giving equivalent results. We quantitatively compare this new way of training convolutional neural networks with conventional training. In addition, as a proof of concept, we train a convolutional neural network with 64 megapixel images, which requires 97\% less memory than the conventional approach.},
   archiveprefix = {arxiv},
   keywords = {Computer Science - Computer Vision and Pattern Recognition}
 }
@@ -349,7 +330,6 @@
   journal = {{arXiv}},
   doi = {10.48550/arXiv.1805.12219},
   urldate = {2023-11-13},
-  abstract = {In this work we consider the application of convolutional neural networks (CNNs) for pixel-wise labeling (a.k.a., semantic segmentation) of remote sensing imagery (e.g., aerial color or hyperspectral imagery). Remote sensing imagery is usually stored in the form of very large images, referred to as "tiles", which are too large to be segmented directly using most CNNs and their associated hardware. As a result, during label inference, smaller sub-images, called "patches", are processed individually and then "stitched" (concatenated) back together to create a tile-sized label map. This approach suffers from computational ineffiency and can result in discontinuities at output boundaries. We propose a simple alternative approach in which the input size of the CNN is dramatically increased only during label inference. This does not avoid stitching altogether, but substantially mitigates its limitations. We evaluate the performance of the proposed approach against a vonventional stitching approach using two popular segmentation CNN models and two large-scale remote sensing imagery datasets. The results suggest that the proposed approach substantially reduces label inference time, while also yielding modest overall label accuracy increases. This approach contributed to our wining entry (overall performance) in the INRIA building labeling competition.},
   archiveprefix = {arxiv},
   keywords = {Computer Science - Computer Vision and Pattern Recognition}
 }
@@ -364,7 +344,6 @@
   issn = {2160-7516},
   doi = {10.1109/CVPRW.2019.00084},
   urldate = {2023-11-13},
-  abstract = {Deep neural network based techniques are state-of-the-art for object detection and classification with the help of the development in computational power and memory efficiency. Although these networks are adapted for mobile platforms with sacrifice in accuracy; the resolution increase in visual sources makes the problem even harder by raising the expectations to leverage all the details in images. Real-time small object detection in low power mobile devices has been one of the fundamental problems of surveillance applications. In this study, we address the detection of pedestrians and vehicles onboard a micro aerial vehicle (MAV) with high-resolution imagery. For this purpose, we exploit PeleeNet, to our best knowledge the most efficient network model on mobile GPUs, as the backbone of an SSD network as well as 38x38 feature map in the earlier layer. After illustrating the low accuracy of state-of-the-art object detectors under the MAV scenario, we introduce a tiling based approach that is applied in both training and inference phases. The proposed technique limits the detail loss in object detection while feeding the network with a fixed size input. The improvements provided by the proposed approach are shown by in-depth experiments performed along Nvidia Jetson TX1 and TX2 using the VisDrone2018 dataset.}
 }
 
 @inproceedings{pereira_2021,
@@ -378,7 +357,6 @@
   issn = {2377-5416},
   doi = {10.1109/SIBGRAPI54419.2021.00045},
   urldate = {2023-11-13},
-  abstract = {Labeling semantic segmentation datasets is a costly and laborious process if compared with tasks like image classification and object detection. This is especially true for remote sensing applications that not only work with extremely high spatial resolution data but also commonly require the knowledge of experts of the area to perform the manual labeling. Data augmentation techniques help to improve deep learning models under the circumstance of few and imbalanced labeled samples. In this work, we propose a novel data augmentation method focused on exploring the spatial context of remote sensing semantic segmentation. This method, ChessMix, creates new synthetic images from the existing training set by mixing transformed mini-patches across the dataset in a chessboard-like grid. ChessMix prioritizes patches with more examples of the rarest classes to alleviate the imbalance problems. The results in three diverse well-known remote sensing datasets show that this is a promising approach that helps to improve the networks' performance, working especially well in datasets with few available data. The results also show that ChessMix is capable of improving the segmentation of objects with few labeled pixels when compared to the most common data augmentation methods widely used.}
 }
 
 @article{zeng_2019,
@@ -392,7 +370,6 @@
   issn = {1361-8415},
   doi = {10.1016/j.media.2019.07.003},
   urldate = {2023-11-13},
-  abstract = {Convolutional Neural Networks (CNNs) have achieved state-of-the-art performance in many different 2D medical image analysis tasks. In clinical practice, however, a large part of the medical imaging data available is in 3D, e.g, magnetic resonance imaging (MRI) data, computed tomography (CT) data and data generated by many other modalities. This has motivated the development of 3D CNNs for volumetric image segmentation in order to benefit from more spatial context. Due to GPU memory restrictions caused by moving to fully 3D, state-of-the-art methods depend on subvolume/patch processing and the size of the input patch is usually small, limiting the incorporation of larger context information for a better performance. In this paper, we propose a novel Holistic Decomposition Convolution (HDC), which learns a number of separate kernels within the same layer and can be regarded as an inverse operation to the previously introduced Dense Upsampling Convolution (DUC), for an effective and efficient semantic segmentation of medical volume images. HDC consists of a periodic down-shuffling operation followed by a conventional 3D convolution. HDC has the advantage of significantly reducing the size of the data for sub-sequential processing while using all the information available in the input irrespective of the down-shuffling factors. We apply HDC directly to the input data, whose output will be used as the input to sub-sequential CNNs. In order to achieve volumetric dense prediction at final output, we need to recover full resolution, which is done by using DUC. We show that both HDC and DUC are network agnostic and can be combined with different CNNs for an improved performance in both training and testing phases. Results obtained from comprehensive experiments conducted on both MRI and CT data of different anatomical regions demonstrate the efficacy of the present approach.},
   keywords = {{Convolutional neural networks,},Deep learning,Semantic segmentation,Volume images}
 }
 
@@ -407,7 +384,6 @@
   issn = {1662-4548},
   doi = {10.3389/fnins.2020.00065},
   urldate = {2023-11-13},
-  abstract = {Convolutional neural network (CNN) models obtain state of the art performance on image classification, localization, and segmentation tasks. Limitations in computer hardware, most notably memory size in deep learning accelerator cards, prevent relatively large images, such as those from medical and satellite imaging, from being processed as a whole in their original resolution. A fully convolutional topology, such as U-Net, is typically trained on down-sampled images and inferred on images of their original size and resolution, by simply dividing the larger image into smaller (typically overlapping) tiles, making predictions on these tiles, and stitching them back together as the prediction for the whole image. In this study, we show that this tiling technique combined with translationally-invariant nature of CNNs causes small, but relevant differences during inference that can be detrimental in the performance of the model. Here we quantify these variations in both medical (i.e., BraTS) and non-medical (i.e., satellite) images and show that training a 2D U-Net model on the whole image substantially improves the overall model performance. Finally, we compare 2D and 3D semantic segmentation models to show that providing CNN models with a wider context of the image in all three dimensions leads to more accurate and consistent predictions. Our results suggest that tiling the input to CNN models\textemdash while perhaps necessary to overcome the memory limitations in computer hardware\textemdash may lead to undesirable and unpredictable errors in the model's output that can only be adequately mitigated by increasing the input of the model to the largest possible tile size.},
   pmcid = {PMC7020775},
   pmid = {32116512}
 }
@@ -422,7 +398,6 @@
   issn = {2381-8549},
   doi = {10.1109/ICIP46576.2022.9897990},
   urldate = {2023-11-13},
-  abstract = {Detection of small objects and objects far away in the scene is a major challenge in surveillance applications. Such objects are represented by small number of pixels in the image and lack sufficient details, making them difficult to detect using conventional detectors. In this work, an open-source framework called Slicing Aided Hyper Inference (SAHI) is proposed that provides a generic slicing aided inference and fine-tuning pipeline for small object detection. The proposed technique is generic in the sense that it can be applied on top of any available object detector without any fine-tuning. Experimental evaluations, using object detection baselines on the Visdrone and xView aerial object detection datasets show that the proposed inference method can increase object detection AP by 6.8\%, 5.1\% and 5.3\% for FCOS, VFNet and TOOD detectors, respectively. Moreover, the detection accuracy can be further increased with a slicing aided fine-tuning, resulting in a cumulative increase of 12.7\%, 13.4\% and 14.5\% AP in the same order. Proposed technique has been integrated with Detectron2, MMDetection and YOLOv5 models and it is publicly available at https://github.com/obss/sahi.git}
 }
 
 @misc{charette_2021,
@@ -431,7 +406,6 @@
   year = {2021},
   month = feb,
   urldate = {2023-11-13},
-  abstract = {Image tiling is a little bit smarter now that objects that span tile boundaries are automatically combined.  More details at https://www.ccoderun.ca/darkhelp...},
   howpublished = {https://www.youtube.com/watch?v=Dp303GuxjFs},
   langid = {english}
 }
@@ -448,7 +422,6 @@
   journal = {{arXiv}},
   doi = {10.48550/arXiv.2309.11069},
   urldate = {2023-11-13},
-  abstract = {We introduce Dynamic Tiling, a model-agnostic, adaptive, and scalable approach for small object detection, anchored in our inference-data-centric philosophy. Dynamic Tiling starts with non-overlapping tiles for initial detections and utilizes dynamic overlapping rates along with a tile minimizer. This dual approach effectively resolves fragmented objects, improves detection accuracy, and minimizes computational overhead by reducing the number of forward passes through the object detection model. Adaptable to a variety of operational environments, our method negates the need for laborious recalibration. Additionally, our large-small filtering mechanism boosts the detection quality across a range of object sizes. Overall, Dynamic Tiling outperforms existing model-agnostic uniform cropping methods, setting new benchmarks for efficiency and accuracy.},
   archiveprefix = {arxiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition}
 }
@@ -463,7 +436,6 @@
   issn = {2160-7516},
   doi = {10.1109/CVPRW.2018.00047},
   urldate = {2023-11-13},
-  abstract = {We present a semantic segmentation algorithm for RGB remote sensing images. Our method is based on the Dilated Stacked U-Nets architecture. This state-of-the-art method has been shown to have good performance in other applications. We perform additional post-processing by blending image tiles and degridding the result. Our method gives competitive results on the DeepGlobe dataset.}
 }
 
 @book{szeliski_2022,
@@ -587,7 +559,6 @@ howpublished= {\url{http://doi.org/10.5281/zenodo.7576602}}
   month = oct,
   doi = {10.5281/ZENODO.7261897},
   urldate = {2023-11-13},
-  abstract = {We're pleased to announce our June 2022 release! This release includes improvements to the data catalog and Explorer user interface, support for bulk queries with GeoParquet, and several new datasets. Feel free to post comments and questions in the thread below. This release brings a number of new features to the Explorer app, including: Item preview mode Generate a timelapse GIF for a dataset mosaic Generate a static image of a dataset mosaic Advanced filter allows settings time in ranges Ability to change sort order of search results This release also includes several new datasets: New datasets This release includes several new datasets: GOES-R Lightning Detection GOES-R Lightning Detection: Continuous lightning detection over the Western Hemisphere from the Geostationary Lightning Mapper (GLM) instrument. NOAA MRMS QPE NOAA MRMS QPE 1-Hour Pass 1: Integrated multi-sensor cumulative precipitation estimate for the past hour with a 1-hour latency. NOAA MRMS QPE 1-Hour Pass 2: Integrated multi-sensor cumulative precipitation estimate for the past hour with a 2-hour latency. NOAA MRMS QPE 24-Hour Pass 2: Integrated multi-sensor cumulative precipitation estimate for the past 24 hours with a 2-hour latency. NOAA Monthly NClimGrid NOAA Monthly NClimGrid: Monthly Climate Gridded dataset with data on temperature and precipitation. \&lt;img style="height: 300px;" src="https://ai4edatasetspublicassets.azureedge.net/assets/pc\_video/docs-data-noaa-nclimgrid-monthly.gif" alt="Timelapse avg temp nclimgrid"/\&gt; Denver Regional Council of Governments Land Use Land Cover Denver Regional Council of Governments Land Use Land Cover: 1-ft resolution land use / land cover dataset around Denver, Colorado. Chesapeake Land Cover/Land Use Chesapeake Land Cover (7-class): 1-meter land cover data product for the entire Chesapeake Bay watershed with a uniform set of 7 land cover classes. Chesapeake Land Cover (13-class): 1-meter land cover data product for the entire Chesapeake Bay watershed with 13 varying land cover classes. Chesapeake Land Use: 1-meter land use data product for the entire Chesapeake Bay watershed.},
   copyright = {Open Access},
   journal = {{Zenodo}, 10.5281/ZENODO.7261897}
 }
