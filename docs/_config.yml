@@ -19,8 +19,6 @@ bibtex_bibfiles:
 sphinx:
   config:
     bibtex_reference_style: author_year
-
-
-sphinx:
   extra_extensions:
   - 'sphinx.ext.autodoc'
+  - 'sphinx.ext.autosummary'
