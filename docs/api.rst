@@ -3,9 +3,22 @@
 
 This API documentation is auto-generated from the docstrings in the code. Stay tuned for more extensive use cases!
 
-.. autosummary::
-   :toctree: _autosummary
-   :template: custom-module-template.rst
-   :recursive:
+.. automodule:: flipnslide.tiling
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-   mypackage
+.. automodule:: flipnslide.ingest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: flipnslide.dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: flipnslide.viz
+   :members:
+   :undoc-members:
+   :show-inheritance:
