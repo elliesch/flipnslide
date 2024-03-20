@@ -17,10 +17,14 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Image Processing"
 ]
+dynamic = ["dependencies"]
 
 [project.urls]
 Homepage = "https://github.com/elliesch/flipnslide"
 Issues = "https://github.com/elliesch/flipnslide/issues"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/requirements.txt"]}
 
 [tool.pytest]
 testpaths = ["flipnslide"]
