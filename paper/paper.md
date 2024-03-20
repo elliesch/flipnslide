@@ -63,25 +63,27 @@ dataloaders, depending on the needs of the user.
 
 Given the growing influx of geospatial satellite imagery in recent decades, deep learning presents a promising 
 opportunity for rapidly parsing meaningful scientific understanding from these images. Despite the remarkable 
-accomplishments of deep neural networks in various vision classification tasks [@ronneberger_2015a, @zhao_2017,@chen_2018,@chen_2019,@tan_2020,@amara_2022], these methods can underperform on data that have noisy 
-or underrepresented labels [@shin_2011,@guo_2019] or when one set of data representations is used for a wider 
+accomplishments of deep neural networks in various vision classification tasks [@ronneberger_2015a; @zhao_2017; 
+@chen_2018; @chen_2019; @tan_2020; @amara_2022], these methods can underperform on data that have noisy 
+or underrepresented labels [@shin_2011; @guo_2019] or when one set of data representations is used for a wider 
 set of downstream tasks [@yang_2018]. These are common challenges in Earth observation imagery. To overcome 
 these issues, data augmentation is a widely adopted technique for generalizing a model fit to make better 
 predictions by expanding the size and distribution of training data through a set of transformations 
-[@vandyk_2001,@hestness_2017]. In recent years, much focus has been given to upstream augmentation methods that 
-address overfitting through data mixing (such as [@zhang_2017,@yun_2019,@hong_2021,@baek_2021]) or proxy-free 
-augmentations (such as [@cubuk_2019,@reed_2021,@li_2023]), both strategic approaches that expand the training 
+[@vandyk_2001; @hestness_2017]. In recent years, much focus has been given to upstream augmentation methods that 
+address overfitting through data mixing (such as [@zhang_2017; @yun_2019; @hong_2021; @baek_2021]) or proxy-free 
+augmentations (such as [@cubuk_2019; @reed_2021; @li_2023]), both strategic approaches that expand the training 
 data, but also create unrealistic transformations of the data. Furthermore, limited attention has been given to 
 investigating the downstream impacts of upstream augmentation techniques on tiled imagery, an approach often 
 employed to parse scientific imaging into smaller tiles to overcome the intractable size of the overall image 
-for the GPU memory [@pinckaers_2018,@huang_2019]. 
+for the GPU memory [@pinckaers_2018; @huang_2019]. 
 
 Tiling is not only necessary for images that are larger than GPU memory [@ronneberger_2015a], but has also been 
 shown to improve small object detection [@unel_2019]. In image classification, spatial context is needed to create 
 greater distance at the latent level between classes with similar channel outputs and surface textures [@pereira_2021]. 
 [@ronneberger_2015a] initially proposed a strategy to overlap tiles at test time, with a fixed size and overlap 
 threshold, in order to avoid losing important spatial context for smaller features. This approach has largely remained 
-the accepted convention since (with a typical overlap of 50%) and has been incorporated at training time as well [@unel_2019,@zeng_2019,@reina_2020,@akyon_2022]. However simply overlapping tiles has two drawbacks: overlapping tiles 
+the accepted convention since (with a typical overlap of 50%) and has been incorporated at training time as well 
+[@unel_2019; @zeng_2019; @reina_2020; @akyon_2022]. However simply overlapping tiles has two drawbacks: overlapping tiles 
 introduce redundancies at training time, as many pixel windows are repeated more than once, leading to overfitting and 
 tiling can slice through objects which removes context from the slices at training and test time.
 
@@ -116,17 +118,18 @@ size. **IDS**, increases data samples for training. **FCV**, full spatio-context
 redundancies in overlapping tiles.
 
 Flip-n-Slide is a concise tiling and augmentation strategy, built intentionally for use with large, scientific images where: 
-1) tiling is necessary; 2) data transformations must be limited to rotations and reflections to be realistic; and 3) there is
-2) no prior knowledge of the pixel locations for which spatial context will be necessary. Physically realistic transformations
-3) of the data are implemented *alongside* the tiling overlap process, thereby minimizing redundancy when training convolutional
-4) neural networks (CNNs), in which orientation matters for learning [@ghosh_2018,@szeliski_2022]. This strategy naturally
-5) creates a larger set of samples without the superfluity of simply overlapping the tiles, leading to enhanced downstream model generalization. To achieve this goal, the algorithm first slides through multiple overlaps of the tiling window, exposing
-6) the model to more contextual views of each location ([Figure 1](#fig1)). Each overlapping window is then distinctly
-7) permuted to remove redundancies with other tiles that share pixels. In the companion paper, [@abrahams_2024], we demonstrated
-8) the power of this approach to increase accuracy in vision classification tasks, particularly in cases of underrepresentation.
-9) Here we present the open-source Python package, `flipnslide`, which seamlessly integrates into machine-learning pipelines
-10) in Scikit-learn [@pedregosa_2011], PyTorch [@paszke_2019] and Tensorflow [@abadi_2015], making this method accessible and
-11) easy to use in existing and new vision classification analyses. 
+One) tiling is necessary; Two) data transformations must be limited to rotations and reflections to be realistic; and Three) there is
+no prior knowledge of the pixel locations for which spatial context will be necessary. Physically realistic transformations
+of the data are implemented *alongside* the tiling overlap process, thereby minimizing redundancy when training convolutional
+neural networks (CNNs), in which orientation matters for learning [@ghosh_2018; @szeliski_2022]. This strategy naturally
+creates a larger set of samples without the superfluity of simply overlapping the tiles, leading to enhanced downstream model 
+generalization. To achieve this goal, the algorithm first slides through multiple overlaps of the tiling window, exposing
+the model to more contextual views of each location ([Figure 1](#fig1)). Each overlapping window is then distinctly
+permuted to remove redundancies with other tiles that share pixels. In the companion paper, [@abrahams_2024], we demonstrated
+the power of this approach to increase accuracy in vision classification tasks, particularly in cases of underrepresentation.
+Here we present the open-source Python package, `flipnslide`, which seamlessly integrates into machine-learning pipelines
+in Scikit-learn [@pedregosa_2011], PyTorch [@paszke_2019] and Tensorflow [@abadi_2015], making this method accessible and
+easy to use in existing and new vision classification analyses. 
 
 ![<a name="fig1"></a>Figure 1. Flip-n-Slide's tile overlap strategy creates eight overlapping tiles for any image region more than a 75% tile threshold away 
 from the overall image edge. Three tiling strategies, shown in false color to illustrate overlap, are visualized here. a) Tiles 
