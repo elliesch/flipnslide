@@ -31,6 +31,7 @@ test:
     - pip
 
 about:
+  home: https://github.com/elliesch/flipnslide/
   summary: A concise Python package to preprocess large scientific images for use with GPUs.
   license: MIT
   license_file: LICENSE
