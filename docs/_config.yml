@@ -3,7 +3,7 @@ title: Flip-n-Slide
 author: Ellianna Abrahams
 # logo: logo.png
 execute:
-  execute_notebooks: force
+  execute_notebooks: 'off' #this saves time for read the docs limits
 
 # Add the code source repository
 repository:
