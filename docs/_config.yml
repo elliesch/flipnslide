@@ -22,9 +22,6 @@ sphinx:
   - 'sphinx.ext.autosummary'
   - 'sphinx.ext.napoleon'    
   - 'sphinx.ext.viewcode'
-  - 'custom-directives'
-  - 'sphinx_sitemap'
-  - 'myst_nb'
   
   config:
     bibtex_reference_style: author_year
