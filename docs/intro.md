@@ -16,7 +16,7 @@ convolutional processing downstream.
 tiled datasets that follow the Flip-n-Slide strategy from a single large 
 scientific image. The package is flexible, providing tiled outputs as `numpy` 
 arrays {cite}`harris_2020`, `PyTorch` tensors {cite}`paszke_2019`, or `Tensorflow` tensors 
-{cite}`abadi_2015` depending on user preference,allowing it to be efficiently slotted into 
+{cite}`abadi_2015` depending on user preference, allowing it to be efficiently slotted into 
 existing machine learning pipelines. `flipnslide` allows the user to select preferred 
 tile size and save modes, and it can be implemented on existing data or used to 
 download and tile any Earth Observation datasets from Planetary Computer 
@@ -24,9 +24,9 @@ download and tile any Earth Observation datasets from Planetary Computer
 
 
 `flipnslide` was developed for use with the large satellite images that are used 
-in Earth Observation, but we welcome test cases from any scientific discipline where
+in Earth observation, but we welcome test cases from any scientific discipline where
 spatiotemporal matrices are used as inputs to deep learning. Please let us know here 
-you found it to be helpful in your machine learning pipeline, and we'll include
+you found it to be helpful in your machine learning pipeline, and we will include
 a link to your project on the [Projects page]()! 
 
 
@@ -45,7 +45,9 @@ Please see [the authors list](https://github.com/elliesch/flipnslide/blob/main/A
 
 ## Citation and Attribution
 
-If you make use of this algorithm, please cite the companion ML4RS @ ICLR 2024 paper:
+If you make use of this code, please cite the companion conference paper from
+*ML4RS @ ICLR 2024* that initially presented this strategy for Earth-observing 
+remote sensing data:
 
     @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
@@ -60,5 +62,5 @@ If you make use of this algorithm, please cite the companion ML4RS @ ICLR 2024 p
       url          = {upcoming},
     }
 
-The testing and development of the `flipnslide` codebase was done on the NASA supported CryoCloud cloud hub {cite}`snow_2023` and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (Grant nos. 1928406 and 1928374).
+The testing and development of the `flipnslide` codebase was done on the NASA supported CryoCloud cloud hub {cite}`snow_2023`, a NASA Earth Science Directorate funded project (grant numbers 80NSSC22K1877 and 80NSSC23K0002) and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant numbers 1928406 and 1928374).
 
