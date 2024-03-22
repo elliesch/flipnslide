@@ -119,7 +119,7 @@ redundancies in overlapping tiles.
 
 Flip-n-Slide is a concise tiling and augmentation strategy, built intentionally for use with large, scientific images where: 
 One) tiling is necessary; Two) data transformations must be limited to rotations and reflections to be realistic; and Three) there is
-no prior knowledge of the pixel locations for which spatial context will be necessary. Physically realistic transformations
+no prior knowledge of the pixel locations for which spatial context will be necessary. Physically-realistic transformations
 of the data are implemented *alongside* the tiling overlap process, thereby minimizing redundancy when training convolutional
 neural networks (CNNs), in which orientation matters for learning [@ghosh_2018; @szeliski_2022]. This strategy naturally
 creates a larger set of samples without the superfluity of simply overlapping the tiles, leading to enhanced downstream model 
@@ -127,7 +127,7 @@ generalization. To achieve this goal, the algorithm first slides through multipl
 the model to more contextual views of each location ([Figure 1](#fig1)). Each overlapping window is then distinctly
 permuted to remove redundancies with other tiles that share pixels. In the companion paper, [@abrahams_2024], we demonstrated
 the power of this approach to increase accuracy in vision classification tasks, particularly in cases of underrepresentation.
-Here we present the open-source Python package, `flipnslide`, which seamlessly integrates into machine-learning pipelines
+Here, we present the open-source Python package, `flipnslide`, which seamlessly integrates into machine-learning pipelines
 in Scikit-learn [@pedregosa_2011], PyTorch [@paszke_2019] and Tensorflow [@abadi_2015], making this method accessible and
 easy to use in existing and new vision classification analyses. 
 
@@ -143,7 +143,7 @@ tile overlaps, capturing more OoI tile position views for the training set.](fig
 The Python package `flipnslide` can be installed from [PyPI](https://pypi.org/project/flipnslide/) using `pip` or from the 
 source code, available on [GitHub](https://github.com/elliesch/flipnslide). The code is well documented on 
 [Read the Docs](http://flipnslide.readthedocs.io), including examples for using `flipnslide` to create custom tiled datasets 
-from large imagery. Users can choose to run `flipnslide` to download Earth Observation imagery from Planetary Computer (cite). 
+from large imagery. Users can choose to run `flipnslide` to download Earth science imagery from Planetary Computer (cite). 
 Using this route, the code creates a time-averaged satellite image, removing NaNs by interpolation and standardizing the averaged 
 image. The image is then simultaneously tiled and augmented, and the output tiles can be held in memory or saved to disk as either 
 arrays (`numpy`) or tensors (`PyTorch` or `Tensorflow`). If a user already has an existing image, `flipnslide` can be implemented 
@@ -182,8 +182,8 @@ the importance of taking actions in support of American Indian and Indigenous pe
 communities today. 
 
 The authors are grateful to ER and HK for helpful discussions on this method. EA acknowledges support from a Two Sigma PhD Fellowship. 
-The testing and development of this codebase was done on the NASA supported CryoCloud cloud hub [@snow_2023] and on the Jupyter Meets 
-the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant nos. 1928406 and 1928374). 
+The testing and development of this codebase was done on the CryoCloud cloud-based JupyterHub [@snow_2023] that is funded 
+by the NASA Transform to Open Science Program, Cryospheric Science Program, and ICESat-2 Science Team (grant nos. 80NSSC23K0002 and 80NSSC22K1877), and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant nos. 1928406 and 1928374). We also gratefully acknowledge funding support from the NASA Cryospheric Science Program Seeds of Change project (grant no. 80NSSC22K0385). 
 
 #
 
