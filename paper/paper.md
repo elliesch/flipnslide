@@ -28,7 +28,7 @@ affiliations:
  - name: Department of Statistics, University of California, Berkeley, Berkeley CA 94720, USA
    index: 1
  - name: Department of Geophysics, Colorado School of Mines, Golden CO 80401, USA
-   index: 1
+   index: 2
 date: 15 March 2023
 bibliography: paper.bib
 
