@@ -19,6 +19,7 @@ dependencies:
   - jupyter-book
   - pip
   - pip:
+    - flipnslide
     - torch
     - torchvision
     - tensorflow

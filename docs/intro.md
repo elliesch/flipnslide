@@ -19,7 +19,7 @@ arrays {cite}`harris_2020`, `PyTorch` tensors {cite}`paszke_2019`, or `Tensorflo
 {cite}`abadi_2015` depending on user preference, allowing it to be efficiently slotted into 
 existing machine learning pipelines. `flipnslide` allows the user to select preferred 
 tile size and save modes, and it can be implemented on existing data or used to 
-download and tile any Earth Observation datasets from Planetary Computer 
+download and tile any Earth science datasets from Planetary Computer 
 {cite}`microsoftopensource_2022`.
 
 
