@@ -13,6 +13,6 @@ build:
 conda:
   environment: environment.yml
 
-formats:
-  - pdf
-  - epub
+# formats:
+#   - pdf
+#   - epub
