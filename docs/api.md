@@ -9,8 +9,8 @@ This API documentation is auto-generated from the docstrings in the code. Stay t
    :recursive:
    :toctree: api
 
-   flipnslide.tiling
-   flipnslide.ingest
-   flipnslide.dataset
-   flipnslide.viz
+   tiling
+   ingest
+   dataset
+   viz
 ```
