@@ -17,7 +17,7 @@ Check back later for instructions on installing from conda forge.
 
 ## Attribution
 
-If you make use of this code, please cite the companion conference paper from *ML4RS @ ICLR 2024* that initially presented this strategy for Earth-observing remote sensing data:
+If you make use of this code, please cite the companion conference paper from *ML4RS @ ICLR 2024* that initially presents the algorithmic methods behind this implementation:
 
     @inproceedings{flipnslide,
       author       = {Ellianna Abrahams and
