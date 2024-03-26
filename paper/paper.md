@@ -108,10 +108,10 @@ classification tasks. Table 1 highlights features of Flip-n-Slide as compared to
 | Dynamic Tiling <br> [@nguyen_2023] | $\checkmark$   |            |            |            | $\checkmark$   |
 | **Flip-n-Slide** <br> [@abrahams_2024] |            | $\checkmark$   | $\checkmark$   | $\checkmark$   | $\checkmark$   |
 
-[**Table 1**: Comparison of other recent input tiling methods with the one presented in this paper. The 
+**Table 1**: Comparison of other recent input tiling methods with the one presented in this paper. The 
 column abbreviations are: **DTS**, dynamic tile size; **NPN**, no pre-training necessary to determine tile 
 size; **IDS**, increases data samples for training; **FCV**, full spatio-contextual view preserved; **NDR**, no data 
-redundancies in overlapping tiles.\label{tab:compare}]
+redundancies in overlapping tiles.
 
 Flip-n-Slide is a concise tiling and augmentation strategy, built intentionally for use with large, scientific images where: 
 (1) tiling is necessary; (2) data transformations must be limited to rotations and reflections to be realistic; and (3) there is
