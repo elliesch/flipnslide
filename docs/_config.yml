@@ -5,11 +5,25 @@ author: Ellianna Abrahams
 execute:
   execute_notebooks: 'off' #this saves time for read the docs limits
 
+parse:
+  myst_enable_extensions:  # See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    - colon_fence
+    - dollarmath
+    - html_image
+    - linkify
+    - substitution
+
 # Add the code source repository
 repository:
   url: https://github.com/elliesch/flipnslide
 html:
   use_repository_button: true
+
+# latex:
+#   latex_engine              : pdflatex 
+#   use_jupyterbook_latex     : true # use sphinx-jupyterbook-latex for pdf builds as default
+#   latex_elements:
+#     pxunit: "0.3cm"
 
 # Add a bibtex file so that we can create citations
 # bibtex_bibfiles:
