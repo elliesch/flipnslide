@@ -7,3 +7,7 @@ chapters:
 - file: contribute
 - file: code_of_conduct
 - file: api
+  sections:
+  - file: api_modules
+  - file: api_classes
+  - file: api_functions
