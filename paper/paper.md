@@ -34,8 +34,6 @@ bibliography: paper.bib
 
 ---
 
-#
-
 # Summary
 
 `flipnslide` is an open-source package that provides the Python implementation of the Flip-n-Slide 
@@ -56,8 +54,6 @@ allowing users to easily preprocess large scientific images and compare efficien
 approaches and enabling ease of use in ablation studies. `flipnslide` is designed for seamless integration into 
 existing machine learning pipelines in Python by allowing data output as arrays, tensors, or directly streamable 
 dataloaders, depending on the needs of the user. 
-
-#
 
 # Statement of need
 
@@ -103,19 +99,19 @@ eliminating overlap redundancies. Like earlier approaches, Flip-n-Slide uses ove
 around OoI, but addresses the issue of redundancy by applying a distinct transformation permutation to each overlapping tile. 
 In this way, Flip-n-Slide avoids the overhead of recent tile combination approaches, which provide drawbacks at scale in 
 large, real-world imagery where nearby degenerate classes could be too easily combined into a false super object in 
-classification tasks. [Table 1](#tab1) highlights features of Flip-n-Slide as compared to previous methods.
+classification tasks. Table \ref{tab:compare} highlights features of Flip-n-Slide as compared to previous methods.
 
 | Method                             | DTS        | NPN        | IDS        | FCV        | NDR        |
 |------------------------------------|------------|------------|------------|------------|------------|
-| 50% Overlap <br> [@unel_2019, @zeng_2019, @reina_2020, @akyon_2022] |            | &#x2713;   | &#x2713;   | &#x2713;   |            |
-| Tile Stitching <br> [@charette_2021] |            | &#x2713;   |            |            | &#x2713;   |
-| Dynamic Tiling <br> [@nguyen_2023] | &#x2713;   |            |            |            | &#x2713;   |
-| **Flip-n-Slide** <br> [@abrahams_2024] |            | &#x2713;   | &#x2713;   | &#x2713;   | &#x2713;   |
+| 50% Overlap <br> [@unel_2019, @zeng_2019, @reina_2020, @akyon_2022] |            | $\checkmark$   | $\checkmark$   | $\checkmark$   |            |
+| Tile Stitching <br> [@charette_2021] |            | $\checkmark$   |            |            | $\checkmark$   |
+| Dynamic Tiling <br> [@nguyen_2023] | $\checkmark$   |            |            |            | $\checkmark$   |
+| **Flip-n-Slide** <br> [@abrahams_2024] |            | $\checkmark$   | $\checkmark$   | $\checkmark$   | $\checkmark$   |
 
-<a name="tab1"></a> *Table 1*: Comparison of other recent input tiling methods with the one presented in this paper. The 
+[*Table 1*: Comparison of other recent input tiling methods with the one presented in this paper. The 
 column abbreviations are: **DTS**, dynamic tile size; **NPN**, no pre-training necessary to determine tile 
 size; **IDS**, increases data samples for training; **FCV**, full spatio-contextual view preserved; **NDR**, no data 
-redundancies in overlapping tiles.
+redundancies in overlapping tiles.]{label="tab:compare"}
 
 Flip-n-Slide is a concise tiling and augmentation strategy, built intentionally for use with large, scientific images where: 
 (1) tiling is necessary; (2) data transformations must be limited to rotations and reflections to be realistic; and (3) there is
@@ -124,19 +120,17 @@ of the data are implemented *alongside* the tiling overlap process, thereby mini
 neural networks (CNNs), in which orientation matters for learning [@ghosh_2018; @szeliski_2022]. This strategy naturally
 creates a larger set of samples without the superfluity of simply overlapping the tiles, leading to enhanced downstream model 
 generalization. To achieve this goal, the algorithm first slides through multiple overlaps of the tiling window, exposing
-the model to more contextual views of each location ([Figure 1](#fig1)). Each overlapping window is then distinctly
+the model to more contextual views of each location (Figure \ref{fig:tiling}). Each overlapping window is then distinctly
 permuted to remove redundancies with other tiles that share pixels. In the companion paper, [@abrahams_2024], we demonstrated
 the power of this approach to increase accuracy in a vision classification task, particularly in cases of underrepresentation.
 Here, we present the open-source Python package, `flipnslide`, which seamlessly integrates into machine-learning pipelines
 in Scikit-learn [@pedregosa_2011], PyTorch [@paszke_2019] and Tensorflow [@abadi_2015], making this method accessible and
 easy to use in existing and new vision classification analyses. 
 
-![<a name="fig1"></a>Figure 1. Flip-n-Slide's tile overlap strategy creates eight overlapping tiles for any image region more than a 75% tile threshold away 
+![*Figure 1*. Flip-n-Slide's tile overlap strategy creates eight overlapping tiles for any image region more than a 75% tile threshold away 
 from the overall image edge. Three tiling strategies, shown in false color to illustrate overlap, are visualized here. a) Tiles 
 do not overlap. b) The conventional tile overlap strategy, shown at the recommended 50% overlap. c) Flip-n-Slide includes more 
-tile overlaps, capturing more OoI tile position views for the training set.](figures/overlap_strategy.pdf)
-
-#
+tile overlaps, capturing more OoI tile position views for the training set. \label{fig:tiling}](figures/overlap_strategy.pdf)
 
 # Implementing `flipnslide`
 
@@ -162,7 +156,7 @@ then tile and augment an image. We have optimized this approach to be used with 
 time to download, particularly when employed on machines that are not server-side to the stored cloud images. The flag `verbose`
 not only prints arrivals at each stage of the algorithmic pipeline to standard out, but it also provides visualizations showing the overall 
 downloaded image, the image after standardization and NaN inpainting, and a selection of the final tiles. We show an example of 
-this in [Figure 2](#fig2).
+this in Figure \ref{fig:output}.
 
 Since we anticipate that any output tiled datasets will be used with a GPU, we also provide useful one-line methods for creating 
 a `PyTorch` dataset and streamable dataloader from `flipnslide` tiles within our codebase. The goal of this is to enable users 
@@ -170,9 +164,7 @@ who are new to working with GPU-enabled datasets to be able to include their dat
 of code arrive at a product that allows a user to begin testing and building machine-learning architectures without needing to spend extra time 
 on preprocessing stages.
 
-![<a name="fig2"></a>Figure 2. The core function of the `flipnslide` codebase tiles a large scientific image either via download (with input coordinates and a time range) or from existing data (as an input image). It tiles in several steps: 1) Standardizing the image and removing NaNs. 2) Cropping the image to a size divisible by the tile size. 3) Tiling the image in one of three approaches. Here we feature tiles created using the Flip-n-Slide algorithm for preserving spatial context in image tiles.](figures/output.jpg)
-
-#
+![*Figure 2.* The core function of the `flipnslide` codebase tiles a large scientific image either via download (with input coordinates and a time range) or from existing data (as an input image). It tiles in several steps: 1) Standardizing the image and removing NaNs. 2) Cropping the image to a size divisible by the tile size. 3) Tiling the image in one of three approaches. Here we feature tiles created using the Flip-n-Slide algorithm for preserving spatial context in image tiles. \label{fig:output}](figures/output.jpg)
 
 # Acknowledgements
 
@@ -181,10 +173,6 @@ Muwekma Ohlone people. We have benefited, and continue to benefit, from the use 
 the importance of taking actions in support of American Indian and Indigenous peoples who are living, flourishing members of our 
 communities today. 
 
-The authors are grateful to ER and HK for helpful discussions on this method. EA acknowledges support from a Two Sigma PhD Fellowship. 
-The testing and development of this codebase was done on the CryoCloud cloud-based JupyterHub [@snow_2023] that is funded 
-by the NASA Transform to Open Science Program and ICESat-2 Science Team (grant numbers 80NSSC23K0002 and 80NSSC22K1877), and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant numbers 1928406 and 1928374). We also gratefully acknowledge funding support from the NASA Cryospheric Science Program (grant number 80NSSC22K0385). 
-
-#
+The authors are grateful to Esther Rolf, Hannah Kerner, and Wilson Sauthoff for helpful discussions on this method. EA gratefully acknowledges support from a Two Sigma PhD Fellowship. The testing and development of this codebase was done on the CryoCloud cloud-based JupyterHub [@snow_2023] that is funded by the NASA Transform to Open Science Program and ICESat-2 Science Team (grant numbers 80NSSC23K0002 and 80NSSC22K1877), and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant numbers 1928406 and 1928374). We also gratefully acknowledge funding support from the NASA Cryospheric Science Program (grant number 80NSSC22K0385). 
 
 # References
