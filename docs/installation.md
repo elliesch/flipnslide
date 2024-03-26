@@ -9,10 +9,7 @@ To install the latest stable version from [PyPI](https://pypi.org/project/flipns
 
 ## Install with `conda`
 
-To install the latest stable version available through `conda`
-on the `conda-forge`channel, run:
-
-    conda install -c conda-forge flipnslide ## THIS DOESN'T WORK YET
+Stay tuned for instructions on how to install `flipnslide` using conda forge.
 
 
 ## Install Development Version from Source
