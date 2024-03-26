@@ -21,7 +21,7 @@ authors:
     equal-contrib: false
     affiliation: 2
   - name: Fernando Pérez
-    orcid: 
+    orcid: 0000-0002-1725-9815
     equal-contrib: false
     affiliation: 1
 affiliations:
