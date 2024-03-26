@@ -99,7 +99,7 @@ eliminating overlap redundancies. Like earlier approaches, Flip-n-Slide uses ove
 around OoI, but addresses the issue of redundancy by applying a distinct transformation permutation to each overlapping tile. 
 In this way, Flip-n-Slide avoids the overhead of recent tile combination approaches, which provide drawbacks at scale in 
 large, real-world imagery where nearby degenerate classes could be too easily combined into a false super object in 
-classification tasks. Table \ref{tab:compare} highlights features of Flip-n-Slide as compared to previous methods.
+classification tasks. Table 1 highlights features of Flip-n-Slide as compared to previous methods.
 
 | Method                             | DTS        | NPN        | IDS        | FCV        | NDR        |
 |------------------------------------|------------|------------|------------|------------|------------|
