@@ -108,10 +108,10 @@ classification tasks. Table \ref{tab:compare} highlights features of Flip-n-Slid
 | Dynamic Tiling <br> [@nguyen_2023] | $\checkmark$   |            |            |            | $\checkmark$   |
 | **Flip-n-Slide** <br> [@abrahams_2024] |            | $\checkmark$   | $\checkmark$   | $\checkmark$   | $\checkmark$   |
 
-[*Table 1*: Comparison of other recent input tiling methods with the one presented in this paper. The 
+[**Table 1**: Comparison of other recent input tiling methods with the one presented in this paper. The 
 column abbreviations are: **DTS**, dynamic tile size; **NPN**, no pre-training necessary to determine tile 
 size; **IDS**, increases data samples for training; **FCV**, full spatio-contextual view preserved; **NDR**, no data 
-redundancies in overlapping tiles.]{label="tab:compare"}
+redundancies in overlapping tiles.\label{tab:compare}]
 
 Flip-n-Slide is a concise tiling and augmentation strategy, built intentionally for use with large, scientific images where: 
 (1) tiling is necessary; (2) data transformations must be limited to rotations and reflections to be realistic; and (3) there is
@@ -127,7 +127,7 @@ Here, we present the open-source Python package, `flipnslide`, which seamlessly 
 in Scikit-learn [@pedregosa_2011], PyTorch [@paszke_2019] and Tensorflow [@abadi_2015], making this method accessible and
 easy to use in existing and new vision classification analyses. 
 
-![*Figure 1*. Flip-n-Slide's tile overlap strategy creates eight overlapping tiles for any image region more than a 75% tile threshold away 
+![Flip-n-Slide's tile overlap strategy creates eight overlapping tiles for any image region more than a 75% tile threshold away 
 from the overall image edge. Three tiling strategies, shown in false color to illustrate overlap, are visualized here. a) Tiles 
 do not overlap. b) The conventional tile overlap strategy, shown at the recommended 50% overlap. c) Flip-n-Slide includes more 
 tile overlaps, capturing more OoI tile position views for the training set. \label{fig:tiling}](figures/overlap_strategy.pdf)
@@ -164,7 +164,7 @@ who are new to working with GPU-enabled datasets to be able to include their dat
 of code arrive at a product that allows a user to begin testing and building machine-learning architectures without needing to spend extra time 
 on preprocessing stages.
 
-![*Figure 2.* The core function of the `flipnslide` codebase tiles a large scientific image either via download (with input coordinates and a time range) or from existing data (as an input image). It tiles in several steps: 1) Standardizing the image and removing NaNs. 2) Cropping the image to a size divisible by the tile size. 3) Tiling the image in one of three approaches. Here we feature tiles created using the Flip-n-Slide algorithm for preserving spatial context in image tiles. \label{fig:output}](figures/output.jpg)
+![The core function of the `flipnslide` codebase tiles a large scientific image either via download (with input coordinates and a time range) or from existing data (as an input image). It tiles in several steps: 1) Standardizing the image and removing NaNs. 2) Cropping the image to a size divisible by the tile size. 3) Tiling the image in one of three approaches. Here we feature tiles created using the Flip-n-Slide algorithm for preserving spatial context in image tiles. \label{fig:output}](figures/output.jpg){width="350pt"}
 
 # Acknowledgements
 
