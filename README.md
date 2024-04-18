@@ -27,9 +27,9 @@ If you make use of this code, please cite the companion conference paper from *M
       title        = {A Concise Tiling Strategy for Preserving Spatial Context in Earth Observation Imagery},
       booktitle    = {Machine Learning for Remote Sensing Workshop {ML4RS} at The Twelfth International Conference 
                       on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024},
-      publisher    = {OpenReview.net},
+      doi          = {10.48550/arXiv.2404.10927},
       year         = {2024},
-      url          = {upcoming},
+      month        = may,
     }
 
 ## License
