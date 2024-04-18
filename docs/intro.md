@@ -57,9 +57,9 @@ remote sensing data:
       title        = {A Concise Tiling Strategy for Preserving Spatial Context in Earth Observation Imagery},
       booktitle    = {Machine Learning for Remote Sensing Workshop {ML4RS} at The Twelfth International Conference 
                       on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024},
-      publisher    = {OpenReview.net},
+      doi          = {10.48550/arXiv.2404.10927},
       year         = {2024},
-      url          = {upcoming},
+      month        = may,
     }
 
 The testing and development of the `flipnslide` codebase was done on the NASA supported CryoCloud cloud hub {cite}`snow_2023`, a NASA Earth Science Directorate funded project (grant numbers 80NSSC22K1877 and 80NSSC23K0002) and on the Jupyter Meets the Earth (JMTE) cloud hub, an NSF EarthCube funded project (grant numbers 1928406 and 1928374).
