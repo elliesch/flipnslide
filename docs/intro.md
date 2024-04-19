@@ -45,7 +45,7 @@ Please see [the authors list](https://github.com/elliesch/flipnslide/blob/main/A
 
 ## Citation and Attribution
 
-If you make use of this code, please cite the companion conference paper from
+If you make use of this code, please cite the [companion conference paper](https://arxiv.org/abs/2404.10927) from
 *ML4RS @ ICLR 2024* that initially presented this strategy for Earth-observing 
 remote sensing data:
 
