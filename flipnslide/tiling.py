@@ -201,11 +201,11 @@ class Tiling:
         if viz == True or verbose == True:
             ingest_viz(image)
             
-        # Crop image to square divisible by tile size
-        if image.shape[-1] % self.tile_size != 0 or image.shape[-2] % self.tile_size != 0:
+        # Crop image to rectangle divisible by tile size
+        if (image.shape[-1] % self.tile_size != 0) or (image.shape[-2] % self.tile_size != 0):
             
             if verbose == True:
-                print('Image is being cropped to a square that is divisible by the tile size...')
+                print('Image is being cropped to a rectangle that is divisible by the tile size...')
             
             crop = self.crop(image, self.tile_size)
             
@@ -272,14 +272,16 @@ class Tiling:
             numpy.ndarray: The cropped image.
         '''
         
-        # Find the largest possible side size
-        smaller_side = min(image.shape[-1],image.shape[-2])
-        needed_size = np.floor(smaller_side/tile_size)*tile_size
-        
-        # Crop image
-        crop = image[:, :-int(image.shape[-2] - needed_size),
-                        :-int(image.shape[-1] - needed_size)]
-        
+        # Find dimensions of the image
+        height, width = image.shape[-2], image.shape[-1]
+    
+        # Calculate largest possible size for each dimension 
+        cropped_height = (height // tile_size) * tile_size
+        cropped_width = (width // tile_size) * tile_size
+    
+        # Crop image s
+        crop = image[:, :cropped_height, :cropped_width]
+    
         return crop
             
 
