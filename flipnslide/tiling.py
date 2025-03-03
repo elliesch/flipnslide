@@ -262,7 +262,9 @@ class Tiling:
             
     def crop(self, image, tile_size):
         '''
-        Crop the input image to the nearest multiple of tile_size along the spatial dimensions.
+        Crop the input image to ensure it can be properly tiled with a sliding window approach.
+        The image is cropped so that each dimension is a multiple of tile_size/2 plus tile_size.
+        This ensures that the sliding window with 50% overlap works correctly.
 
         Parameters:
             image (numpy.ndarray): The input image to be cropped.
@@ -271,17 +273,25 @@ class Tiling:
         Returns:
             numpy.ndarray: The cropped image.
         '''
+
+        #find dimensions of the image
+        height, width = image.shape[1], image.shape[2]
         
-        # Find dimensions of the image
-        height, width = image.shape[-2], image.shape[-1]
-    
-        # Calculate largest possible size for each dimension 
-        cropped_height = (height // tile_size) * tile_size
-        cropped_width = (width // tile_size) * tile_size
-    
-        # Crop image s
-        crop = image[:, :cropped_height, :cropped_width]
-    
+        #for sliding window with stride of tile_size/2, we need:
+        #final_size = n * (tile_size/2) + tile_size/2
+        #where n is an integer
+        stride = tile_size // 2
+        
+        #calculate largest valid size for each dimension
+        valid_height = ((height - tile_size) // stride) * stride + tile_size
+        valid_width = ((width - tile_size) // stride) * stride + tile_size
+        
+        #crop image symmetrically from center
+        start_h = (height - valid_height) // 2
+        start_w = (width - valid_width) // 2
+        
+        crop = image[:, start_h:start_h+valid_height, start_w:start_w+valid_width]
+        
         return crop
             
 
