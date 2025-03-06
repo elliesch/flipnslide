@@ -426,46 +426,46 @@ class Tiling:
     
         #find the tile indices
         shape = image.shape
-        side = max(shape)
-        n_channels = min(shape)
-        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+        n_channels = shape[0]
+        height, width = shape[1], shape[2]
+
+        #define stride (half the tile size)
+        stride = tile_size // 2
+
+        #calculate tile count for each dimension 
+        num_tiles_h = (height - tile_size) // stride + 1  
+        num_tiles_w = (width - tile_size) // stride + 1
 
         #initialize the tile arrays
-        image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        image_tiles = np.empty((num_tiles_h, num_tiles_w, n_channels, tile_size, tile_size))
         idx_tiles = []
 
+        #generate sliding window positions
+        positions_h = [i * stride for i in range(num_tiles_h)]
+        positions_w = [i * stride for i in range(num_tiles_w)]
+
         #fold into tiles
-        fold_idx = np.arange(0, side, int(tile_size/2))
+        for idx_h, pos_h in enumerate(positions_h):
+            for idx_w, pos_w in enumerate(positions_w):
+                #tile the images when there are enough pixels
+                if pos_h + tile_size <= height and pos_w + tile_size <= width:
+                    image_tile = image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
 
-        for idx_x in range(len(fold_idx)-1):
-            for idx_y in range(len(fold_idx)-1):
+                    #add rotational augmentations where needed
+                    #where both are divisible by two, no rotations happen
+                    if (idx_h % 2 != 0) and (idx_w % 2 != 0):
+                        image_tile = np.rot90(image_tile, k=3, axes=(1,2))  # 270
+                        idx_tiles.append(1)
+                    elif (idx_h % 2 != 0) and (idx_w % 2 == 0):
+                        image_tile = np.rot90(image_tile, k=2, axes=(1,2))  # 180
+                        idx_tiles.append(2)
+                    elif (idx_h % 2 == 0) and (idx_w % 2 != 0):
+                        image_tile = np.rot90(image_tile, k=1, axes=(1,2))  # 90
+                        idx_tiles.append(3)
+                    else:
+                        idx_tiles.append(0)
 
-                #tile the images
-                image_tile = image[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
-                                      fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
-
-                #add rotational augmentations where needed
-                #where both are divisible by two, no rotations happen
-                if (idx_x % 2 != 0) & (idx_y % 2 != 0):
-                    image_tile = np.rot90(image_tile, k=3, axes=(1,2)) #270
-                    #track the indices
-                    idx_tiles.append(1)
-
-                elif (idx_x % 2 != 0) & (idx_y % 2 == 0):
-                    image_tile = np.rot90(image_tile, k=2, axes=(1,2)) #180
-                    #track the indices
-                    idx_tiles.append(2)
-
-                elif (idx_x % 2 == 0) & (idx_y % 2 != 0):
-                    image_tile = np.rot90(image_tile, k=1, axes=(1,2)) #90
-                    #track the indices
-                    idx_tiles.append(3)
-
-                else:
-                    #track the indices
-                    idx_tiles.append(0)
-
-                image_tiles[idx_x, idx_y, :, :, :] = image_tile
+                    image_tiles[idx_h, idx_w] = image_tile
 
         #define the tiles
         image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
@@ -473,67 +473,63 @@ class Tiling:
         ###======== TILL HERE THE CODE IS SLIDING TILES WITH ROTATION AUGMENTATION ADDED ========###
         ###======== FOLLOWING IS INNER TILES WITH FLIP + ROTATION AUGMENTATION ADDED ========###
 
-        #find the tile indices for the 25/75% slide
-        inner_image = image[:, 64:-64, 64:-64]
-        shape = inner_image.shape
-        side = max(shape)
-        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+        #set the image inset for the 25/75% slide
+        inset = tile_size // 2
 
-        #initialize the tile arrays and starting point for index tracking
-        inner_image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
-        # idx_starting_point = max(max(idx_tiles)) + 1 #since there will be a zero
+        if height - 2*inset >= tile_size and width - 2*inset >= tile_size:
+            inner_image = image[:, inset:height-inset, inset:width-inset]
+            del image
 
-        #fold into tiles
-        fold_idx = np.arange(0, side, int(tile_size/2))
+            inner_height, inner_width = inner_image.shape[1], inner_image.shape[2]
 
-        if tile_size == 64:
-            adjuster = 1
-        elif tile_size == 128:
-            adjuster = 1
-        elif tile_size == 256:
-            adjuster = 2
-        elif tile_size == 512:
-            adjuster = 3
+            #calculate tile count for each dimension in inset
+            num_inner_tiles_h = (inner_height - tile_size) // stride + 1
+            num_inner_tiles_w = (inner_width - tile_size) // stride + 1
 
-        for idx_x in range(len(fold_idx)-adjuster):
-            for idx_y in range(len(fold_idx)-adjuster):
+            #initialize the inset tile arrays
+            inner_image_tiles = np.empty((num_inner_tiles_h, num_inner_tiles_w, n_channels, tile_size, tile_size))
 
-                #tile the images
-                image_tile = inner_image[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
-                                            fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
+            #generate sliding window positions for the inset
+            inner_positions_h = [i * stride for i in range(num_inner_tiles_h)]
+            inner_positions_w = [i * stride for i in range(num_inner_tiles_w)]
 
-                #add rotational augmentations and flip augmentations
-                #0 degrees gets no rotation and only flips
-                #90 degrees gets rotation and flips
-                #remaining rotations + flips are redundant
-                if (idx_x % 2 == 0) & (idx_y % 2 == 0):
-                    image_tile = image_tile[:,:,::-1] #horizontal flip
-                    #track the indices
-                    idx_tiles.append(4)
+            #fold into tiles
+            for idx_h, pos_h in enumerate(inner_positions_h):
+                for idx_w, pos_w in enumerate(inner_positions_w):
+                    #tile the images when there are enough pixels
+                    if pos_h + tile_size <= inner_height and pos_w + tile_size <= inner_width:
+                        image_tile = inner_image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
 
-                elif (idx_x % 2 == 0) & (idx_y % 2 != 0):
-                    image_tile = image_tile[:,::-1,:] #vertical flip
-                    #track the indices
-                    idx_tiles.append(5)
+                        #add rotational augmentations and flip augmentations
+                        #0 degrees gets no rotation and only flips
+                        #90 degrees gets rotation and flips
+                        #remaining rotations + flips are redundant
+                        if (idx_h % 2 == 0) and (idx_w % 2 == 0):
+                            image_tile = image_tile[:,:,::-1]  # horizontal flip
+                            idx_tiles.append(4)
+                        elif (idx_h % 2 == 0) and (idx_w % 2 != 0):
+                            image_tile = image_tile[:,::-1,:]  # vertical flip
+                            idx_tiles.append(5)
+                        elif (idx_h % 2 != 0) and (idx_w % 2 != 0):
+                            image_tile = np.rot90(image_tile, k=1, axes=(1,2))
+                            image_tile = image_tile[:,:,::-1]
+                            idx_tiles.append(6)
+                        elif (idx_h % 2 != 0) and (idx_w % 2 == 0):
+                            image_tile = np.rot90(image_tile, k=1, axes=(1,2))
+                            image_tile = image_tile[:,::-1,:]
+                            idx_tiles.append(7)
 
-                elif (idx_x % 2 != 0) & (idx_y % 2 != 0):
-                    image_tile = np.rot90(image_tile, k=1, axes=(1,2))
-                    image_tile = image_tile[:,:,::-1] 
-                    #track the indices
-                    idx_tiles.append(6)
+                        inner_image_tiles[idx_h, idx_w] = image_tile
 
-                elif (idx_x % 2 != 0) & (idx_y % 2 == 0):
-                    image_tile = np.rot90(image_tile, k=1, axes=(1,2))
-                    image_tile = image_tile[:,::-1,:] 
-                    #track the indices
-                    idx_tiles.append(7)
+            #define the tiles
+            inner_image_tiles = inner_image_tiles.reshape(-1, n_channels, tile_size, tile_size)
 
-                inner_image_tiles[idx_x, idx_y, :, :, :] = image_tile
+            #combine all tiles
+            all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
 
-        #define the tiles
-        inner_image_tiles = inner_image_tiles.reshape(-1, n_channels, tile_size, tile_size)
+        
+        else:
+            #if inset is too small to tile, just use the outer tiles
+            all_image_tiles = image_tiles
 
-        ## Combine all the tiles
-        all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
-
-        return all_image_tiles, idx_tiles
+        return all_image_tiles, idx_tiles        
