@@ -200,23 +200,26 @@ class Tiling:
         # Visualize imported image
         if viz == True or verbose == True:
             ingest_viz(image)
+
+        # Implement chosen tiling method
+        if tile_style not in ['flipnslide', 'overlap', 'no_overlap']:
+            raise ValueError("Invalid style. Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.")
             
         # Crop image to rectangle divisible by tile size
         if (image.shape[-1] % self.tile_size != 0) or (image.shape[-2] % self.tile_size != 0):
             
             if verbose == True:
                 print('Image is being cropped to a rectangle that is divisible by the tile size...')
-            
-            crop = self.crop(image, self.tile_size)
+
+            if tile_style == 'no_overlap':
+                crop = self.crop(image, self.tile_size, 1)
+            else:
+                crop = self.crop(image, self.tile_size, 2)
             
             if viz == True or verbose == True:
                 crop_viz(image, crop)
                 
             image = crop
-            
-        # Implement chosen tiling method
-        if tile_style not in ['flipnslide', 'overlap', 'no_overlap']:
-            raise ValueError("Invalid style. Allowed values are 'flipnslide', 'overlap', or 'no_overlap'.")
         
         if verbose == True:
                 print(f'Image is being tiled using the {tile_style} approach...')
