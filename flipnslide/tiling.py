@@ -260,7 +260,7 @@ class Tiling:
             
             
             
-    def crop(self, image, tile_size):
+    def crop(self, image, tile_size, stride_div=2):
         '''
         Crop the input image to ensure it can be properly tiled with a sliding window approach.
         The image is cropped so that each dimension is a multiple of tile_size/2 plus tile_size.
@@ -278,15 +278,16 @@ class Tiling:
         height, width = image.shape[1], image.shape[2]
 
         #calculate how many complete tiles fit in each dimension considering stride
-        stride = tile_size // 2
+        stride = tile_size // stride_div
         num_strides_h = (height - tile_size) // stride
         num_strides_w = (width - tile_size) // stride
 
         #make sure there is an even number of strides
-        if num_strides_h % 2 != 0:
-            num_strides_h -= 1
-        if num_strides_w % 2 != 0:
-            num_strides_w -= 1
+        if stride_div == 2:
+            if num_strides_h % 2 != 0:
+                num_strides_h -= 1
+            if num_strides_w % 2 != 0:
+                num_strides_w -= 1
 
         #calculate final crop dimensions
         final_height = num_strides_h * stride + tile_size
