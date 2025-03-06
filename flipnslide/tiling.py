@@ -274,24 +274,40 @@ class Tiling:
             numpy.ndarray: The cropped image.
         '''
 
-        #find dimensions of the image
+        #find image dimensions
         height, width = image.shape[1], image.shape[2]
-        
-        #for sliding window with stride of tile_size/2, we need:
-        #final_size = n * (tile_size/2) + tile_size/2
-        #where n is an integer
+
+        #calculate how many complete tiles fit in each dimension considering stride
         stride = tile_size // 2
-        
-        #calculate largest valid size for each dimension
-        valid_height = ((height - tile_size) // stride) * stride + tile_size
-        valid_width = ((width - tile_size) // stride) * stride + tile_size
-        
-        #crop image symmetrically from center
-        start_h = (height - valid_height) // 2
-        start_w = (width - valid_width) // 2
-        
-        crop = image[:, start_h:start_h+valid_height, start_w:start_w+valid_width]
-        
+        num_strides_h = (height - tile_size) // stride
+        num_strides_w = (width - tile_size) // stride
+
+        #make sure there is an even number of strides
+        if num_strides_h % 2 != 0:
+            num_strides_h -= 1
+        if num_strides_w % 2 != 0:
+            num_strides_w -= 1
+
+        #calculate final crop dimensions
+        final_height = num_strides_h * stride + tile_size
+        final_width = num_strides_w * stride + tile_size
+
+        #center crop, so crop happens on all sides
+        start_h = (height - final_height) // 2
+        start_w = (width - final_width) // 2
+
+        crop = image[:, start_h:start_h+final_height, start_w:start_w+final_width]
+
+        #throw error if the image isn't large enough to tile
+        h_pixels = crop.shape[1]
+        w_pixels = crop.shape[2]
+        fold_h = np.arange(0, h_pixels, stride)
+        fold_w = np.arange(0, w_pixels, stride)
+
+        if len(fold_h) < 3 or len(fold_w) < 3:
+            raise ValueError(f"Image too small for tiling with tile_size={tile_size}. "
+                             f"Minimum dimensions needed: {2*stride + tile_size}x{2*stride + tile_size}")
+
         return crop
             
 
