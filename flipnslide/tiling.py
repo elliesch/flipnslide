@@ -349,10 +349,11 @@ class Tiling:
         #fold into tiles
         for idx_h, pos_h in enumerate(positions_h):
             for idx_w, pos_w in enumerate(positions_w):
-                #tile the image
-                image_tile = image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
-
-                image_tiles[idx_h, idx_w] = image_tile
+                if pos_h + tile_size <= height and pos_w + tile_size <= width:
+                    #tile the image when there is enough pixels
+                    image_tile = image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
+    
+                    image_tiles[idx_h, idx_w] = image_tile
 
         #define the tiles
         image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
@@ -381,30 +382,36 @@ class Tiling:
           will appear in multiple tiles, except for the pixels along the borders.
         '''
     
-        #find the tile indices
+        #find the tile dims
         shape = image.shape
-        side = max(shape)
-        n_channels = min(shape)
-        count_1d = int(side/tile_size) + (int(side/tile_size) - 1)
+        n_channels = shape[0]
+        height, width = shape[1], shape[2]
+
+        #define stride (half the tile size)
+        stride = tile_size // 2
+
+        #calculate tile count for each dim 
+        num_tiles_h = (height - tile_size) // stride + 1  
+        num_tiles_w = (width - tile_size) // stride + 1
 
         #initialize the tile arrays
-        image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        image_tiles = np.empty((num_tiles_h, num_tiles_w, n_channels, tile_size, tile_size))
+
+        #generate sliding window positions
+        positions_h = [i * stride for i in range(num_tiles_h)]
+        positions_w = [i * stride for i in range(num_tiles_w)]
 
         #fold into tiles
-        fold_idx = np.arange(0, side, int(tile_size/2))
+        for idx_h, pos_h in enumerate(positions_h):
+            for idx_w, pos_w in enumerate(positions_w):
+                #tile the images when there are enough pixels
+                if pos_h + tile_size <= height and pos_w + tile_size <= width:
+                    image_tile = image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
 
-        for idx_x in range(len(fold_idx)-1):
-            for idx_y in range(len(fold_idx)-1):
-
-                #tile the images
-                image_tile = image[:, fold_idx[idx_x]:(fold_idx[idx_x]+tile_size), 
-                                      fold_idx[idx_y]:(fold_idx[idx_y]+tile_size)]
-                image_tiles[idx_x, idx_y, :, :, :] = image_tile
+                    image_tiles[idx_h, idx_w] = image_tile
 
         #define the tiles
         image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
-
-        return image_tiles
     
     
     def sliding_transforms(self, image, tile_size):
