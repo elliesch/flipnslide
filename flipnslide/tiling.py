@@ -331,24 +331,28 @@ class Tiling:
           the input image.
         '''
 
-        #find the tile indices
-        shape = image.shape
-        side = max(shape)
-        n_channels = min(shape)
-        count_1d = int(side/tile_size)
+        #find the image dims
+        n_channels = image.shape[0]
+        height, width = image.shape[1], image.shape[2]
+
+        #calculate tile count for each dim
+        num_tiles_h = height // tile_size
+        num_tiles_w = width // tile_size
 
         #initialize the tile arrays
-        image_tiles = np.empty([count_1d, count_1d, n_channels, tile_size, tile_size])
+        image_tiles = np.empty((num_tiles_h, num_tiles_w, n_channels, tile_size, tile_size))
+
+        #generate tile posistions
+        positions_h = [i * tile_size for i in range(num_tiles_h)]
+        positions_w = [i * tile_size for i in range(num_tiles_w)]
 
         #fold into tiles
-        fold_idx = np.arange(0, side, tile_size)
+        for idx_h, pos_h in enumerate(positions_h):
+            for idx_w, pos_w in enumerate(positions_w):
+                #tile the image
+                image_tile = image[:, pos_h:pos_h+tile_size, pos_w:pos_w+tile_size]
 
-        for idx_x in range(len(fold_idx)-1):
-            for idx_y in range(len(fold_idx)-1):
-
-                #tile the images
-                image_tile = image[:, fold_idx[idx_x]:fold_idx[idx_x+1], fold_idx[idx_y]:fold_idx[idx_y+1]]
-                image_tiles[idx_x, idx_y, :, :, :] = image_tile
+                image_tiles[idx_h, idx_w] = image_tile
 
         #define the tiles
         image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
@@ -428,7 +432,7 @@ class Tiling:
           redundancies between overlapping pixels.
         '''
     
-        #find the tile indices
+        #find the tile dims
         shape = image.shape
         n_channels = shape[0]
         height, width = shape[1], shape[2]
@@ -436,7 +440,7 @@ class Tiling:
         #define stride (half the tile size)
         stride = tile_size // 2
 
-        #calculate tile count for each dimension 
+        #calculate tile count for each dim 
         num_tiles_h = (height - tile_size) // stride + 1  
         num_tiles_w = (width - tile_size) // stride + 1
 
