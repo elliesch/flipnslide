@@ -478,7 +478,7 @@ class Tiling:
                     elif (idx_h % 2 == 0) and (idx_w % 2 != 0):
                         image_tile = np.rot90(image_tile, k=1, axes=(1,2))  # 90
                         # idx_tiles.append(3)
-                    else:
+                    # else:
                         # idx_tiles.append(0)
 
                     image_tiles[idx_h, idx_w] = image_tile
