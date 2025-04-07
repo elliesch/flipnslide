@@ -20,7 +20,11 @@ def ingest_viz(image):
     n_channels = image.shape[0]
     
     fig, axes = plt.subplots(nrows=1, ncols=n_channels, 
-                             figsize=(int(3*n_channels), 3)) 
+                             figsize=(int(3*n_channels), 3))
+
+    #generalize for monochromatic images
+    if n_channels == 1:
+    axes = [axes] 
     
     for ii in range(n_channels):
         axes[ii].imshow(image[ii])
