@@ -3,6 +3,7 @@
 import numpy as np
 import torch
 import tensorflow as tf
+import gc
 from .ingest import ImageIngest
 from .util import saver
 from .viz import ingest_viz, crop_viz, tile_viz
@@ -484,6 +485,7 @@ class Tiling:
 
         #define the tiles
         image_tiles = image_tiles.reshape(-1, n_channels, tile_size, tile_size)
+        print('First stage of flipnslide tiling completed...')
 
         ###======== TILL HERE THE CODE IS SLIDING TILES WITH ROTATION AUGMENTATION ADDED ========###
         ###======== FOLLOWING IS INNER TILES WITH FLIP + ROTATION AUGMENTATION ADDED ========###
@@ -494,6 +496,8 @@ class Tiling:
         if height - 2*inset >= tile_size and width - 2*inset >= tile_size:
             inner_image = image[:, inset:height-inset, inset:width-inset]
             del image
+            gc.collect()
+            print('Collected...')
 
             inner_height, inner_width = inner_image.shape[1], inner_image.shape[2]
 
@@ -541,6 +545,7 @@ class Tiling:
 
             #combine all tiles
             all_image_tiles = np.concatenate((image_tiles, inner_image_tiles), axis=0)
+            print('Second stage of flipnslide tiling completed...')
 
         
         else:
