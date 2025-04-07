@@ -454,7 +454,7 @@ class Tiling:
 
         #initialize the tile arrays
         image_tiles = np.empty((num_tiles_h, num_tiles_w, n_channels, tile_size, tile_size))
-        idx_tiles = []
+        # idx_tiles = []
 
         #generate sliding window positions
         positions_h = [i * stride for i in range(num_tiles_h)]
@@ -471,15 +471,15 @@ class Tiling:
                     #where both are divisible by two, no rotations happen
                     if (idx_h % 2 != 0) and (idx_w % 2 != 0):
                         image_tile = np.rot90(image_tile, k=3, axes=(1,2))  # 270
-                        idx_tiles.append(1)
+                        # idx_tiles.append(1)
                     elif (idx_h % 2 != 0) and (idx_w % 2 == 0):
                         image_tile = np.rot90(image_tile, k=2, axes=(1,2))  # 180
-                        idx_tiles.append(2)
+                        # idx_tiles.append(2)
                     elif (idx_h % 2 == 0) and (idx_w % 2 != 0):
                         image_tile = np.rot90(image_tile, k=1, axes=(1,2))  # 90
-                        idx_tiles.append(3)
+                        # idx_tiles.append(3)
                     else:
-                        idx_tiles.append(0)
+                        # idx_tiles.append(0)
 
                     image_tiles[idx_h, idx_w] = image_tile
 
@@ -525,18 +525,18 @@ class Tiling:
                         #remaining rotations + flips are redundant
                         if (idx_h % 2 == 0) and (idx_w % 2 == 0):
                             image_tile = image_tile[:,:,::-1]  # horizontal flip
-                            idx_tiles.append(4)
+                            # idx_tiles.append(4)
                         elif (idx_h % 2 == 0) and (idx_w % 2 != 0):
                             image_tile = image_tile[:,::-1,:]  # vertical flip
-                            idx_tiles.append(5)
+                            # idx_tiles.append(5)
                         elif (idx_h % 2 != 0) and (idx_w % 2 != 0):
                             image_tile = np.rot90(image_tile, k=1, axes=(1,2))
                             image_tile = image_tile[:,:,::-1]
-                            idx_tiles.append(6)
+                            # idx_tiles.append(6)
                         elif (idx_h % 2 != 0) and (idx_w % 2 == 0):
                             image_tile = np.rot90(image_tile, k=1, axes=(1,2))
                             image_tile = image_tile[:,::-1,:]
-                            idx_tiles.append(7)
+                            # idx_tiles.append(7)
 
                         inner_image_tiles[idx_h, idx_w] = image_tile
 
@@ -552,4 +552,4 @@ class Tiling:
             #if inset is too small to tile, just use the outer tiles
             all_image_tiles = image_tiles
 
-        return all_image_tiles, idx_tiles        
+        return all_image_tiles#, idx_tiles        
