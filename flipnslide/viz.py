@@ -24,7 +24,7 @@ def ingest_viz(image):
 
     #generalize for monochromatic images
     if n_channels == 1:
-    axes = [axes] 
+        axes = [axes] 
     
     for ii in range(n_channels):
         axes[ii].imshow(image[ii])
