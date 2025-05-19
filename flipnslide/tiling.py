@@ -226,7 +226,8 @@ class Tiling:
                 print(f'Image is being tiled using the {tile_style} approach...')
         
         if tile_style == 'flipnslide':            
-            self.tiles, self.permute_idx = self.sliding_transforms(image, self.tile_size)
+            # self.tiles, self.permute_idx = self.sliding_transforms(image, self.tile_size)
+            self.tiles = self.sliding_transforms(image, self.tile_size)
         elif tile_style == 'overlap':
             self.tiles = self.sliding_tile(image, self.tile_size)
         else:
