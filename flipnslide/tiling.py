@@ -84,7 +84,7 @@ class FlipnSlide:
         
         self.tiles = init_tiling.tiles
         
-        self.permute_idx = init_tiling.permute_idx
+        # self.permute_idx = init_tiling.permute_idx
 
 
 class Tiling:
